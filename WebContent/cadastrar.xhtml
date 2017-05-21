@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="estilo.css" />
+</h:head>
+<h:body style="background-color:LightGray">
+	<h:form id="myForm" prependId="false">
+		<p:growl id="msg" />
+		<h:panelGrid columns="3" id="panel">
+			<h:outputLabel value="autor"></h:outputLabel>
+			<h:inputText value="#{cadastrarMB.arquivo.author}" id="autor"></h:inputText>
+			<p:message for="autor" showDetail="true"></p:message>
+			<h:outputLabel value="title"></h:outputLabel>
+			<h:inputText value="#{cadastrarMB.arquivo.title}" id="title"></h:inputText>
+			<p:message for="title" showDetail="true"></p:message>
+			<h:outputLabel value="journal"></h:outputLabel>
+			<h:inputText value="#{cadastrarMB.arquivo.journal}" id="journal"></h:inputText>
+			<p:message for="journal" showDetail="true"></p:message>
+			<h:outputLabel value="year"></h:outputLabel>
+			<h:inputText value="#{cadastrarMB.arquivo.year}" id="year"></h:inputText>
+			<p:message for="year" showDetail="true"></p:message>
+			<h:outputLabel value="volume"></h:outputLabel>
+			<h:inputText value="#{cadastrarMB.arquivo.volume}" id="volume"></h:inputText>
+			<p:message for="volume" showDetail="true"></p:message>
+			<h:outputLabel value="number"></h:outputLabel>
+			<h:inputText value="#{cadastrarMB.arquivo.number}" id="number"></h:inputText>
+			<p:message for="number" showDetail="true"></p:message>
+			<h:outputLabel value="pages"></h:outputLabel>
+			<h:inputText value="#{cadastrarMB.arquivo.pages}" id="pages"></h:inputText>
+			<p:message for="pages" showDetail="true"></p:message>
+		</h:panelGrid>
+		<p:commandButton ajax="false" value="Cadastrar"
+			action="#{cadastrarMB.cadastrar}" update="myForm"
+			styleClass="salvarClass" />
+		<p:commandButton value="LIMPAR" update="panel" process="@this"
+			styleClass="limparClass">
+			<p:resetInput target="panel" />
+		</p:commandButton>
+		<p:button value="VOLTAR" styleClass="voltarClass" ajax="false"
+			href="inicio.jsf" />
+	</h:form>
+
+	<p:dock>
+		<p:menuitem value="Cadastrar"
+			icon="/resources/imagens/mesa/cadastrar.png" url="cadastrar.jsf"
+			ajax="false" />
+		<p:menuitem value="Upload" icon="/resources/imagens/mesa/upload.jpg"
+			url="index.jsf" ajax="false" />
+		<p:menuitem value="Cover Flow"
+			icon="/resources/imagens/mesa/cover-flow.jpg" url="contentFlow.jsf" />
+		<p:menuitem value="Comparar"
+			icon="/resources/imagens/mesa/comparar.jpg" url="comparar.jsf" />
+		<p:menuitem value="Lixeira" icon="/resources/imagens/mesa/lixo.png"
+			url="#" />
+	</p:dock>
+</h:body>
+</html>

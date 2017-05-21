@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body
+	style="background-image:url(resources/imagens/mesa/unesp.jpg); background-repeat: no-repeat;background-position: center;background-attachment: fixed;">
+	<p:growl showDetail="true" sticky="true" />
+
+	<p:menubar toggleEvent="click">
+		<p:submenu icon="ui-icon-home">
+			<p:menuitem value="Sobre o Sistema" url="#"
+				onclick="PF('info').show();" icon="ui-icon ui-icon-info">
+			</p:menuitem>
+		</p:submenu>
+
+		<p:submenu label="Ajuda">
+			<p:menuitem value="Manual" url="#" onclick="PF('ajuda').show();"
+				styleClass="open" icon="ui-icon ui-icon-help">
+			</p:menuitem>
+			<p:menuitem value="Documento" url="#" onclick="PF('pdf').show();"
+				styleClass="open" icon="ui-icon ui-icon-document">
+			</p:menuitem>
+		</p:submenu>
+
+		<p:submenu label="Sobre Nós">
+			<p:menuitem value="Desenvolvedores" url="#"
+				onclick="PF('ajuda').show();" styleClass="open"
+				icon="ui-icon ui-icon-info">
+			</p:menuitem>
+		</p:submenu>
+
+	</p:menubar>
+
+	<p:dialog header="PDF" widgetVar="pdf" resizable="false"
+		maximizable="true" minimizable="true" width="70%" height="400">
+		<object type="application/pdf"
+			data="/BIB/resources/documento/Projeto-BibSys.pdf?pfdrid_c=true"
+			width="100%" height="100%" />
+	</p:dialog>
+
+	<p:dialog header="Sobre" draggable="true" widgetVar="info"
+		showEffect="fade" hideEffect="fade" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/mesa/info.jpg" />
+				<h:outputText value="Leitor de Arquivos" style="font-size:16px" />
+				<h:outputText value="Versão Beta 1" />
+				<p:commandButton value="Doar" async="true" onclick="return false;" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="text-align:center;">
+				<h:outputText value="Ao Contribuir:" style="font-weight:bold" />
+				<h:outputText value="Você estará ajudando o nosso trabalho " />
+				<h:outputText value="" style="font-weight:bold" />
+				<h:outputText value="a melhorar cada vez mais" />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Ajuda" draggable="true" widgetVar="ajuda"
+		showEffect="slice" hideEffect="slice">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/mesa/Help.png" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<h:outputText value="Como Funciona:" style="font-weight:bold;" />
+				<h:outputText value="O BibSys é um programa que tem por objetivo" />
+				<h:outputText
+					value="realizar o gerenciamento de arquivos bibtex(.bib ). " />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+	<p:dock itemWidth="50" maxWidth="90">
+		<p:menuitem value="Cadastrar"
+			icon="/resources/imagens/mesa/cadastrar.png" url="cadastrar.jsf"
+			ajax="false" />
+		<p:menuitem value="Upload" icon="/resources/imagens/mesa/upload.png"
+			url="index.jsf" ajax="false" />
+		<p:menuitem value="Cover Flow"
+			icon="/resources/imagens/mesa/cover-flow.png" url="contentFlow.jsf" />
+		<p:menuitem value="Comparar"
+			icon="/resources/imagens/mesa/comparar.png" url="comparar.jsf" />
+		<p:menuitem value="Lixeira" icon="/resources/imagens/mesa/lixo.png"
+			url="#" />
+	</p:dock>
+
+</h:body>
+</html>

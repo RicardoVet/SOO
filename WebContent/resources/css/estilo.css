@@ -1,0 +1,78 @@
+body{
+	width:800px;
+	margin:auto;
+}
+
+#myForm{
+	background-color:#F5F5F5;
+	height: 370px;
+	margin-top:80px;
+	padding-left:20px;
+	padding-top:15px;
+	-moz-border-radius: 8px; /* Para Firefox */
+	-webkit-border-radius: 8px; /*Para Safari e Chrome */
+	border-radius: 8px;
+	box-shadow: 10px 10px 3px #888888; 
+}
+
+#myForm td input{
+	width: 300px;
+}
+
+#myForm table#panel{
+	margin-left:150px;
+}
+
+#tabelaPrincipal:nome:filter{
+	display:none;
+}
+
+.ui-message-error-detail{
+	font-size: 13px;
+}
+
+td{
+    height: 30px;
+}
+label{
+	font-size: 19px;
+	font-style:italic;
+	font-family:Lucida Console;
+	text-shadow: 2px 2px #40E0D0;
+	color: white;
+}
+
+.salvarClass{
+	color:gray;
+	text-shadow:1px 1px black;
+	margin-top:150px; 
+	margin-left:140px;
+	box-shadow: 5px 5px 3px #000000;
+	border-radius: 900px;
+	-moz-border-radius: 900px; /* Para Firefox */
+	-webkit-border-radius: 900px; /*Para Safari e Chrome */
+	font-size: 19px;
+	width:auto;
+}
+
+.limparClass{
+	color:gray;
+	text-shadow:1px 1px black;
+	margin-left:100px;
+	box-shadow: 5px 5px 3px #000000;
+	border-radius: 900px;
+	-moz-border-radius: 900px; /* Para Firefox */
+	-webkit-border-radius: 900px; /*Para Safari e Chrome */
+	width:auto;
+}
+
+.voltarClass{
+	color:gray;
+	text-shadow:1px 1px black;
+	margin-left:100px;
+	box-shadow: 5px 5px 3px #000000;
+	border-radius: 900px;
+	-moz-border-radius: 900px; /* Para Firefox */
+	-webkit-border-radius: 900px; /*Para Safari e Chrome */
+	width:auto;
+}

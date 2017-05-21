@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<style>
+		.ui-datatable .ui-column-filter {
+			display: none;
+			width: 100px;
+			margin: auto;
+		}
+	</style>
+</h:head>
+<h:body>
+	<h:form prependId="false">
+		<p:growl id="msg" />
+		<p:dataTable var="nome" value="#{compararArquivos.nomes}"
+			rowIndexVar="indice" rows="3" paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="1,2,3" widgetVar="Tabela" id="tabelaPrincipal"
+			filteredValue="#{compararArquivos.filteredNomes}">
+			<f:facet name="header">
+				<p:outputPanel>
+					<h:outputText value="Buscar:" />
+					<h:inputText id="globalFilter" onkeyup="PF('Tabela').filter()" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column headerText="Selecionar" width="90">
+				<p:selectBooleanCheckbox style="margin-left:35px;">
+					<p:ajax update="msg :comparar"
+						listener="#{compararArquivos.addIndice(indice)}" />
+				</p:selectBooleanCheckbox>
+			</p:column>
+			<p:column headerText="Nome" filterBy="#{nome}" id="nome">
+					 <h:outputText value="#{nome}"/>
+			</p:column>
+			<p:column headerText="Download" width="90">
+				<p:commandLink action="#{compararArquivos.lerArquivo}" update="msg"
+					ajax="true"
+					style="margin-left:20px;">
+					<p:graphicImage url="/resources/imagens/comparar/Download.png" />
+				</p:commandLink>
+			</p:column>
+			<p:column headerText="Editar" width="90">
+				<p:commandLink action="#{compararArquivos.lerArquivo}" update="msg"
+					ajax="true"
+					style="margin-left:20px;">
+					<p:graphicImage url="/resources/imagens/comparar/editar.png" />
+				</p:commandLink>
+			</p:column>
+			<p:column headerText="Apagar" width="90">
+				<p:commandLink action="#{compararArquivos.lerArquivo}" update="msg"
+					ajax="true"
+					style="margin-left:20px;">
+					<p:graphicImage url="/resources/imagens/comparar/deletar.png" />
+				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+		<p:commandButton id="comparar"
+			actionListener="#{compararArquivos.compararArquivos}"
+			value="Comparar"
+			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null)}"
+			oncomplete="PF('dlg1').show();" update="tabela1 :tabela2" />
+		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
+		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
+			position="center center" modal="true" maximizable="false"
+			minimizable="true" hideEffect="explode" showEffect="slide"
+			minWidth="800" minHeight="800" width="70%" height="350"
+			resizable="false">
+			<p:layout style="min-width:300px;min-height:300px;" onResize="true">
+				<p:layoutUnit position="west" resizable="true" size="50%"
+					style="height:70px;">
+					<p:dataTable value="#{compararArquivos.arquivos.get(0)}" var="bib"
+						id="tabela1">
+						<p:column headerText="Arquivo 1">
+							<p:panelGrid columns="2">
+								<h:outputText value="author:" />
+								<h:outputText value="#{bib.author}" />
+								<h:outputText value="journal:" />
+								<h:outputText value="#{bib.journal}" />
+								<h:outputText value="number:" />
+								<h:outputText value="#{bib.number}" />
+								<h:outputText value="pages:" />
+								<h:outputText value="#{bib.pages}" />
+								<h:outputText value="title:" />
+								<h:outputText value="#{bib.title}" />
+								<h:outputText value="volume:" />
+								<h:outputText value="#{bib.volume}" />
+								<h:outputText value="year:" />
+								<h:outputText value="#{bib.year}" />
+							</p:panelGrid>
+						</p:column>
+					</p:dataTable>
+				</p:layoutUnit>
+
+				<p:layoutUnit position="center" size="0" minSize="0" maxSize="0"
+					visible="false">
+				</p:layoutUnit>
+
+				<p:layoutUnit position="east" resizable="true" size="50%">
+					<p:dataTable value="#{compararArquivos.arquivos.get(1)}" var="bib"
+						id="tabela2">
+						<p:column headerText="Arquivo 2">
+							<p:panelGrid columns="2">
+								<h:outputText value="author:" />
+								<h:outputText value="#{bib.author}" />
+								<h:outputText value="journal:" />
+								<h:outputText value="#{bib.journal}" />
+								<h:outputText value="number:" />
+								<h:outputText value="#{bib.number}" />
+								<h:outputText value="pages:" />
+								<h:outputText value="#{bib.pages}" />
+								<h:outputText value="title:" />
+								<h:outputText value="#{bib.title}" />
+								<h:outputText value="volume:" />
+								<h:outputText value="#{bib.volume}" />
+								<h:outputText value="year:" />
+								<h:outputText value="#{bib.year}" />
+							</p:panelGrid>
+						</p:column>
+					</p:dataTable>
+				</p:layoutUnit>
+			</p:layout>
+		</p:dialog>
+	</h:form>
+	<p:dock>
+		<p:menuitem value="Cadastrar"
+			icon="/resources/imagens/mesa/cadastrar.png" url="cadastrar.jsf"
+			ajax="false" />
+		<p:menuitem value="Upload" icon="/resources/imagens/mesa/upload.png"
+			url="index.jsf" ajax="false" />
+		<p:menuitem value="Cover Flow"
+			icon="/resources/imagens/mesa/cover-flow.png" url="contentFlow.jsf" />
+		<p:menuitem value="Comparar"
+			icon="/resources/imagens/mesa/comparar.png" url="comparar.jsf" />
+		<p:menuitem value="Lixeira" icon="/resources/imagens/mesa/lixo.png"
+			url="#" />
+	</p:dock>
+</h:body>
+</html>

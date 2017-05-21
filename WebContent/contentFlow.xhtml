@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+	<p:contextMenu for="images">
+		<p:menuitem value="Info" url="javascript:void(0)"
+			onclick="clickFlow(this, event)" /> 
+	</p:contextMenu>
+	<p:contentFlow value="#{compararArquivos.nomes}" var="nome">
+			#{nome}
+			<p:graphicImage alt="bib" onclick="clickFlow(this, event)" 
+			value="/resources/imagens/flow/file.png" styleClass="content" id="images" />
+	</p:contentFlow>
+
+	<p:dialog header="Informações" widgetVar="dlg1" minHeight="40"
+		position="center">
+		<h:outputText value="conteúdo do arquivo deve ser mostrado" />
+	</p:dialog>
+
+	<script>
+      		function clickFlow(item ,e) {                                                                       
+            		if ($(item).parent().hasClass('active')) {
+                   		e.stopImmediatePropagation();
+                   		PF('dlg1').show();                                                    
+            		}
+      		}
+		</script>
+
+	<p:dock>
+		<p:menuitem value="Cadastrar"
+			icon="/resources/imagens/mesa/cadastrar.png" url="cadastrar.jsf"
+			ajax="false" />
+		<p:menuitem value="Upload" icon="/resources/imagens/mesa/upload.jpg"
+			url="index.jsf" ajax="false" />
+		<p:menuitem value="Cover Flow"
+			icon="/resources/imagens/mesa/cover-flow.jpg" url="contentFlow.jsf" />
+		<p:menuitem value="Comparar"
+			icon="/resources/imagens/mesa/comparar.jpg" url="comparar.jsf" />
+		<p:menuitem value="Lixeira" icon="/resources/imagens/mesa/lixo.png"
+			url="#" />
+	</p:dock>
+</h:body>
+</html>
