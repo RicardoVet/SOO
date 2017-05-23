@@ -1,26 +1,23 @@
 package br.com.unesp.manageadbeans;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
-
 import br.com.unesp.beans.Arquivo;
-import br.com.unesp.constatntes.Const;
 import br.com.unesp.factory.FileFactory;
-import br.com.unesp.negocios.LeitorArquivos;
 
 @SuppressWarnings("serial")
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class CompararArquivos implements Serializable {
 
 	private List<String> nomes;
@@ -28,18 +25,13 @@ public class CompararArquivos implements Serializable {
 	private Arquivo arquivo;
 	private List<Arquivo> arquivos;
 	private List<String> filteredNomes;
+	private String conteudo;
 
 	@PostConstruct
 	public void listarArquivos() {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ServletContext scontext = (ServletContext) facesContext.getExternalContext().getContext();
-		File dir = new File(scontext.getRealPath(Const.path.getValue()));
-		if (!dir.list().equals("")) {
-			nomes = new ArrayList<>();
-			for (String nome : dir.list()) {
-				nomes.add(nome);
-			}
-		}
+		arquivos  = new ArrayList<>();
+		nomes = new ArrayList<>();
+		
 	}
 
 	public void addIndice(int indice) {
@@ -50,25 +42,18 @@ public class CompararArquivos implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nomes.get(indice) + mensagem));
 	}
 
-	public void lerArquivo() {
-		LeitorArquivos leitor = new LeitorArquivos();
-		try {
-			for (Integer indice : indices) {
-				leitor.lerArquivo(FacesContext.getCurrentInstance().getExternalContext()
-						.getRealPath(Const.path.getValue() + nomes.get(indice)));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void lerArquivo(byte[] dados) throws IOException {
+		conteudo="";
+		BufferedReader buffer= new BufferedReader(new InputStreamReader(new ByteArrayInputStream(dados)));
+		while(buffer.ready())
+			conteudo+=buffer.readLine();
+		buffer.close();
 	}
 
 	public void compararArquivos() {
-		this.arquivos = new ArrayList<>();
-		for (Integer indice : indices) {
-			setArquivo(FileFactory.getInstance());
-			arquivo.parser(indices.indexOf(indice), nomes.get(indice));
-			arquivos.add(arquivo);
-		}
+		setArquivo(FileFactory.getInstance());
+		arquivo.parser(conteudo);
+		arquivos.add(arquivo);
 	}
 
 	public List<String> getNomes() {
@@ -109,5 +94,13 @@ public class CompararArquivos implements Serializable {
 
 	public void setFilteredNomes(List<String> filteredNomes) {
 		this.filteredNomes = filteredNomes;
+	}
+
+	public String getConteudo() {
+		return conteudo;
+	}
+
+	public void setConteudo(String conteudo) {
+		this.conteudo = conteudo;
 	}
 }

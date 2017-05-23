@@ -62,8 +62,7 @@
 		<p:commandButton id="comparar"
 			actionListener="#{compararArquivos.compararArquivos}"
 			value="Comparar"
-			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null)}"
-			oncomplete="PF('dlg1').show();" update="tabela1 :tabela2" />
+			oncomplete="PF('dlg1').show();" />
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
 			position="center center" modal="true" maximizable="false"
@@ -73,27 +72,6 @@
 			<p:layout style="min-width:300px;min-height:300px;" onResize="true">
 				<p:layoutUnit position="west" resizable="true" size="50%"
 					style="height:70px;">
-					<p:dataTable value="#{compararArquivos.arquivos.get(0)}" var="bib"
-						id="tabela1">
-						<p:column headerText="Arquivo 1">
-							<p:panelGrid columns="2">
-								<h:outputText value="author:" />
-								<h:outputText value="#{bib.author}" />
-								<h:outputText value="journal:" />
-								<h:outputText value="#{bib.journal}" />
-								<h:outputText value="number:" />
-								<h:outputText value="#{bib.number}" />
-								<h:outputText value="pages:" />
-								<h:outputText value="#{bib.pages}" />
-								<h:outputText value="title:" />
-								<h:outputText value="#{bib.title}" />
-								<h:outputText value="volume:" />
-								<h:outputText value="#{bib.volume}" />
-								<h:outputText value="year:" />
-								<h:outputText value="#{bib.year}" />
-							</p:panelGrid>
-						</p:column>
-					</p:dataTable>
 				</p:layoutUnit>
 
 				<p:layoutUnit position="center" size="0" minSize="0" maxSize="0"
@@ -101,27 +79,6 @@
 				</p:layoutUnit>
 
 				<p:layoutUnit position="east" resizable="true" size="50%">
-					<p:dataTable value="#{compararArquivos.arquivos.get(1)}" var="bib"
-						id="tabela2">
-						<p:column headerText="Arquivo 2">
-							<p:panelGrid columns="2">
-								<h:outputText value="author:" />
-								<h:outputText value="#{bib.author}" />
-								<h:outputText value="journal:" />
-								<h:outputText value="#{bib.journal}" />
-								<h:outputText value="number:" />
-								<h:outputText value="#{bib.number}" />
-								<h:outputText value="pages:" />
-								<h:outputText value="#{bib.pages}" />
-								<h:outputText value="title:" />
-								<h:outputText value="#{bib.title}" />
-								<h:outputText value="volume:" />
-								<h:outputText value="#{bib.volume}" />
-								<h:outputText value="year:" />
-								<h:outputText value="#{bib.year}" />
-							</p:panelGrid>
-						</p:column>
-					</p:dataTable>
 				</p:layoutUnit>
 			</p:layout>
 		</p:dialog>
