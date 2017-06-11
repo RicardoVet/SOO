@@ -24,12 +24,12 @@ public class ArquivoUploadView {
 		try {
 			compararArquivos.lerArquivo(event.getFile().getContents());
 		} catch (IOException e) {
-			FacesMessage message = new FacesMessage("Erro", event.getFile().getFileName() + " is not uploaded.");
+			FacesMessage message = new FacesMessage("Erro", event.getFile().getFileName() + " não foi enviado.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			e.printStackTrace();
 			return;
 		}
-		FacesMessage message = new FacesMessage("Sucesso", event.getFile().getFileName() + " is uploaded.");
+		FacesMessage message = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 }
