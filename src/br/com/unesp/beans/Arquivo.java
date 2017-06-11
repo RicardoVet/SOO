@@ -3,12 +3,17 @@ package br.com.unesp.beans;
 import java.util.List;
 import java.util.Map;
 
+import br.com.unesp.servicos.Parser;
+
 public abstract class Arquivo {
 
 	private List<String> referencias;
 	private Map<String, String>atributos;
+	private String tipo;
+	protected Parser parser;
 	
-	public abstract void parser(String couteudo);
+	public abstract String parser(String couteudo);
+	
 	
 	public Map<String, String> getAtributos() {
 		return atributos;
@@ -24,5 +29,13 @@ public abstract class Arquivo {
 	
 	public List<String> getReferencias() {
 		return referencias;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

@@ -1,27 +1,29 @@
 package br.com.unesp.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.HashMap;
 
-public class Bib extends Arquivo {
+import br.com.unesp.servicos.Science;
+import br.com.unesp.servicos.Scopus;
 
+public class Bib extends Arquivo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Bib() {
 		setReferencias(new ArrayList<>());
+		setAtributos(new HashMap<String, String>());
 	}
-
+/**    
+ * criar logica de decisão para definir parser concreto
+ * 
+ * **/
 	@Override
-	public void parser(String conteudo) {
-		StringTokenizer token = new StringTokenizer(conteudo, "=");
-		String parser ="";
-		
-		while (token.hasMoreTokens()) {
-			parser+=(token.nextToken());
-		}
-		
-		StringTokenizer res = new StringTokenizer(parser, ",");
-		
-		while(res.hasMoreTokens()){
-			System.out.println(res.nextToken());
-		}
+	public String parser(String conteudo) {
+		parser = new Science();
+		return parser.getParser(conteudo, this);
 	}
 }
