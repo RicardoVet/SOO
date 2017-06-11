@@ -60,9 +60,8 @@
 			</p:column>
 		</p:dataTable>
 		<p:commandButton id="comparar"
-			actionListener="#{compararArquivos.compararArquivos}"
-			value="Comparar"
-			oncomplete="PF('dlg1').show();" />
+			onclick="PF('dlg1').show();"
+			value="Comparar" />
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
 			position="center center" modal="true" maximizable="false"
@@ -72,6 +71,14 @@
 			<p:layout style="min-width:300px;min-height:300px;" onResize="true">
 				<p:layoutUnit position="west" resizable="true" size="50%"
 					style="height:70px;">
+					<p:dataTable value="#{compararArquivos.arquivos.get(0).get(0).atributos.entrySet()}" var="bib">
+						<p:column headerText="labels">
+							<h:outputText value="#{bib.key}" />
+						</p:column>
+						<p:column headerText="valores">
+							<h:outputText value="#{bib.value}" />
+						</p:column>
+					</p:dataTable>
 				</p:layoutUnit>
 
 				<p:layoutUnit position="center" size="0" minSize="0" maxSize="0"
