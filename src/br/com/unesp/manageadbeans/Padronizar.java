@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -29,6 +30,8 @@ public class Padronizar {
 	@ManagedProperty(value = "#{compararArquivos}")
 	CompararArquivos compararArquivos;
 
+	private String caminho;
+
 	public void setCompararArquivos(CompararArquivos compararArquivos) {
 		this.compararArquivos = compararArquivos;
 	}
@@ -43,6 +46,7 @@ public class Padronizar {
     	FileWriter writer;
     	FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext scontext = (ServletContext) facesContext.getExternalContext().getContext();
+        caminho = scontext.getRealPath("/WEB-INF/upload/bib.txt");
 		try {
 			writer = new FileWriter(new File(scontext.getRealPath("/WEB-INF/upload/bib.txt")));
 			writer.write(saida.toString());
@@ -58,6 +62,12 @@ public class Padronizar {
 			e.printStackTrace();
 		}
     }
+	
+	@PreDestroy
+	public void finalize(){
+        File file = new File(caminho);
+        file.delete();
+	}
  
     public StreamedContent getFile() {
         return file;
