@@ -7,10 +7,18 @@
 
 	<h:head></h:head>
 	<h:body>
-		<h:form>
-		    <p:fileUpload label="Selecionar" invalidFileMessage="arquivo inválido" fileUploadListener="#{arquivoUploadView.upload}" mode="advanced" update="messages" auto="true" sizeLimit="10000000" allowTypes="/(\.|\/)(bib)$/" />
-		    <p:growl id="messages" showDetail="true" />
-		    <!-- <h:commandLink action="#{fileUploadView.clean}" value="voltar" />-->
+		<h:form id="upload" prependId="false">
+			<p:selectOneRadio id="customRadio" value="#{arquivoUploadView.opcao}">
+				<f:selectItem itemLabel="ieee xplore" itemValue="1"/>
+				<f:selectItem itemLabel="Scopus" itemValue="2" />
+				<f:selectItem itemLabel="Science Direct" itemValue="3" />
+				<p:ajax event="change" partialSubmit="true" update="upload"/>
+			</p:selectOneRadio>
+			<h:form prependId="false">
+			    <p:fileUpload label="Selecionar" invalidFileMessage="arquivo inválido" fileUploadListener="#{arquivoUploadView.upload}" mode="advanced" update="messages" auto="true" sizeLimit="10000000" allowTypes="/(\.|\/)(bib)$/" disabled="#{arquivoUploadView.opcao eq null}"/>
+			    <p:growl id="messages" showDetail="true" />
+			    <!-- <h:commandLink action="#{fileUploadView.clean}" value="voltar" />-->
+			</h:form>
 		</h:form>
 		<p:button value="Voltar" href="inicio.jsf"/>
 		<p:dock>

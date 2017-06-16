@@ -22,8 +22,21 @@ public class Bib extends Arquivo implements Serializable {
  * 
  * **/
 	@Override
-	public String parser(String conteudo) {
-		parser = new Science();
+	public String parser(String conteudo, String opcao) {
+		switch (opcao) {
+		case "1":
+			parser = new Scopus();
+			break;
+		case "2":
+			parser = new Scopus();
+			break;
+		case "3":
+			parser = new Science();
+			break;
+		default:
+			parser = new Scopus();
+			break;
+		}
 		return parser.getParser(conteudo, this);
 	}
 }

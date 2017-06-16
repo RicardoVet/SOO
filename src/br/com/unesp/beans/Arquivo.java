@@ -12,7 +12,7 @@ public abstract class Arquivo {
 	private String tipo;
 	protected Parser parser;
 	
-	public abstract String parser(String couteudo);
+	public abstract String parser(String couteudo, String opcao);
 	
 	
 	public Map<String, String> getAtributos() {
