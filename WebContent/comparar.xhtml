@@ -3,26 +3,27 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<style>
-		.ui-datatable .ui-column-filter {
-			display: none;
-			width: 100px;
-			margin: auto;
-		}
-	</style>
+.ui-datatable .ui-column-filter {
+	display: none;
+	width: 100px;
+	margin: auto;
+}
+</style>
 </h:head>
 <h:body>
 	<h:form prependId="false">
-	<f:metadata>
-   <f:viewAction action="#{compararArquivos.checkF5}" onPostBack="true"/>
-</f:metadata>
+		<f:metadata>
+			<f:viewAction action="#{compararArquivos.checkF5}" />
+		</f:metadata>
 		<p:growl id="msg" />
 		<p:dataTable var="nome" value="#{compararArquivos.nomes}"
-			rowIndexVar="indice" rows="3" paginator="true"
+			rowIndexVar="indice" rows="4" paginator="true"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="1,2,3" widgetVar="Tabela" id="tabelaPrincipal"
 			filteredValue="#{compararArquivos.filteredNomes}">
@@ -34,80 +35,112 @@
 			</f:facet>
 			<p:column headerText="Selecionar" width="90">
 				<p:selectBooleanCheckbox style="margin-left:35px;">
-					<p:ajax update="msg :comparar"
+					<p:ajax update="msg comparar concatenar"
 						listener="#{compararArquivos.addIndice(nome)}" />
 				</p:selectBooleanCheckbox>
 			</p:column>
 			<p:column headerText="Nome" filterBy="#{nome}" id="nome">
-					 <h:outputText value="#{nome}"/>
+				<h:outputText value="#{nome}" />
 			</p:column>
 			<p:column headerText="Visualizar" width="90">
-				<p:commandLink action="#{compararArquivos.visualizar(nome)}" update="msg :formatado"
-					ajax="true"
-					oncomplete="PF('bib').show();"
+				<p:commandLink action="#{compararArquivos.visualizar(nome)}"
+					update="msg :formatado" ajax="true" oncomplete="PF('bib').show();"
 					style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/visualizar.png" />
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Download" width="90">
 				<p:commandLink action="#{compararArquivos.download(nome)}"
-					ajax="false"
-					style="margin-left:20px;">
+					ajax="false" style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/Download.png" />
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Editar" width="90">
 				<p:commandLink action="#{compararArquivos.editar}" update="msg"
-					ajax="true"
-					style="margin-left:20px;">
+					ajax="true" style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/editar.png" />
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Apagar" width="90">
 				<p:commandLink action="#{compararArquivos.apagar}" update="msg"
-					ajax="true"
-					style="margin-left:20px;">
+					ajax="true" style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/deletar.png" />
 				</p:commandLink>
 			</p:column>
 		</p:dataTable>
 		<p:commandButton id="comparar"
-			actionListener="#{compararArquivos.comparar}"
-			value="Comparar"
-			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null)}"
-			oncomplete="PF('dlg1').show();" update="tabela1 :tabela2" />
+			actionListener="#{compararArquivos.comparar}" value="Comparar"
+			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}"
+			oncomplete="PF('dlg1').show();"
+			update="tabela3 tabela2 tabela1 tabela" />
+		<p:commandButton id="concatenar" ajax="false"
+			actionListener="#{compararArquivos.concatenar}" value="Concatenar"
+			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
+
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
 			position="center center" modal="true" maximizable="false"
 			minimizable="true" hideEffect="explode" showEffect="slide"
-			minWidth="800" minHeight="800" width="70%" height="350"
-			resizable="false">
-			<p:layout style="min-width:300px;min-height:300px;" onResize="true">
-				<p:layoutUnit position="west" resizable="true" size="50%"
-					style="height:70px;">
-					<p:dataTable value="#{compararArquivos.arquivos.get(0).get(0).atributos.entrySet()}" var="bib" id="tabela1">
-						<p:column headerText="labels">
-							<h:outputText value="#{bib.key}" />
+			minWidth="800" minHeight="800" width="70%" height="450"
+			resizable="false" id="tabela">
+			<c:if test="#{compararArquivos.indices.size() ge 2}">
+				<p:layout style="min-width:300px;min-height:300px;" onResize="true">
+					<p:layoutUnit position="west" resizable="true" size="50%"
+						style="height:70px;">
+						<p:dataTable
+							value="#{compararArquivos.arquivos.get(compararArquivos.indices.get(0)).get(0).atributos.entrySet()}"
+							var="bib" id="tabela1">
+							<p:column headerText="labels">
+								<h:outputText value="#{bib.key}" style="font-size:12px;" />
+							</p:column>
+							<p:column headerText="valores">
+								<h:outputText value="#{bib.value}" style="font-size:12px;" />
+							</p:column>
+						</p:dataTable>
+					</p:layoutUnit>
+
+					<p:layoutUnit position="center" size="0" minSize="0" maxSize="0"
+						visible="false">
+					</p:layoutUnit>
+
+					<p:layoutUnit position="east" resizable="true" size="50%"
+						style="height:70px;">
+						<p:dataTable
+							value="#{compararArquivos.arquivos.get(compararArquivos.indices.get(1)).get(0).atributos.entrySet()}"
+							var="bib" id="tabela2">
+							<p:column headerText="labels">
+								<h:outputText value="#{bib.key}" style="font-size:12px;" />
+							</p:column>
+							<p:column headerText="valores">
+								<h:outputText value="#{bib.value}" style="font-size:12px;" />
+							</p:column>
+						</p:dataTable>
+					</p:layoutUnit>
+				</p:layout>
+			</c:if>
+			<p:layout>
+				<p:layoutUnit position="top"></p:layoutUnit>
+				<p:layoutUnit position="center">
+					<p:dataTable var="bib"
+						value="#{compararArquivos.bibView1.atributos.entrySet()}"
+						id="tabela3">
+						<p:column headerText="referencias">
+							<h:outputText value="#{bib.key}"
+								style="color:red; font-size:14px; font-family:arial,fantasy;" />
 						</p:column>
 						<p:column headerText="valores">
-							<h:outputText value="#{bib.value}" />
+							<h:outputText value="#{bib.value}"
+								style="color:red; font-size:14px; font-family:arial,fantasy;" />
 						</p:column>
-					</p:dataTable>
-				</p:layoutUnit>
-
-				<p:layoutUnit position="center" size="0" minSize="0" maxSize="0"
-					visible="false">
-				</p:layoutUnit>
-
-				<p:layoutUnit position="east" resizable="true" size="50%">
-				<p:dataTable id="tabela2">
-						
 					</p:dataTable>
 				</p:layoutUnit>
 			</p:layout>
 		</p:dialog>
-		<p:dialog widgetVar="bib" id="formatado" height="200" width="600" position="center" maximizable="true" minimizable="true">
-			<h:outputText value="#{fn:replace(compararArquivos.saidaPadronizada,'\\n','&lt;br/&gt;')}" escape="false" />
+		<p:dialog widgetVar="bib" id="formatado" height="200" width="600"
+			position="center" maximizable="true" minimizable="true">
+			<h:outputText
+				value="#{fn:replace(compararArquivos.saidaPadronizada,'\\n','&lt;br/&gt;')}"
+				escape="false" style="font-size:16px;" />
 		</p:dialog>
 	</h:form>
 	<p:dock>
