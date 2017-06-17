@@ -51,7 +51,7 @@ public class Science implements Parser{
 			token = new StringTokenizer(str.replace("}", ""), "\"");
 			if ((token.countTokens() % 2) == 0) {
 				while (token.hasMoreTokens())
-					arq.getAtributos().put(token.nextToken(), token.nextToken());
+					arq.getAtributos().put(token.nextToken().trim(), token.nextToken().trim());
 			}
 		} else {
 			String str = conteudo;
@@ -91,7 +91,7 @@ public class Science implements Parser{
 			token = new StringTokenizer(str.replace("}", ""), "\"");
 			if ((token.countTokens() % 2) == 0) {
 				while (token.hasMoreTokens())
-					arq.getAtributos().put(token.nextToken(), token.nextToken());
+					arq.getAtributos().put(token.nextToken().trim(), token.nextToken().trim());
 			}
 		}
 		return conteudo;
