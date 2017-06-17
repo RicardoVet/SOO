@@ -17,6 +17,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.unesp.beans.Arquivo;
 import br.com.unesp.constatntes.Constantes;
 import br.com.unesp.factory.FileFactory;
@@ -37,6 +39,7 @@ public class CompararArquivos implements Serializable {
 	private String opcao;
 	private String nome;
 	private String saidaPadronizada;
+	private Arquivo bibView1;
 	int i = 0;
 
 	@PostConstruct
@@ -53,6 +56,15 @@ public class CompararArquivos implements Serializable {
 		Object ret = indices.contains(indice) ? !indices.remove((Integer) indice) : indices.add(indice);
 		String mensagem = (ret == Boolean.TRUE) ? " Adicionado" : " Removido";
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nomes.get(indice) + mensagem));
+	}
+
+	public Boolean valueCheck(String nome) {
+		if (indices != null) {
+			int indice = nomes.indexOf(nome);
+			if (indices.contains(indice))
+				return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 
 	public void editar() {
@@ -78,7 +90,7 @@ public class CompararArquivos implements Serializable {
 			for (String key : keys) {
 				buffer.append("  ");
 				buffer.append(key.trim());
-				int tamanho = key.length();
+				int tamanho = key.trim().length();
 				while (tamanho < 16) {
 					buffer.append(" ");
 					tamanho++;
@@ -93,36 +105,37 @@ public class CompararArquivos implements Serializable {
 			buffer.append("\n");
 		}
 		setSaidaPadronizada(buffer.toString());
-		
+
 		StringBuffer temp = new StringBuffer(nome);
 		temp.toString().replace(".bib", ".txt");
-		
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		response.setHeader("Content-Disposition", "attachment;filename="+temp);
+
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+				.getResponse();
+		response.setHeader("Content-Disposition", "attachment;filename=" + temp);
 		response.setContentType("text/html; charset=UTF-8");
 		ServletOutputStream out = null;
 		try {
 			ByteArrayInputStream input = new ByteArrayInputStream(saidaPadronizada.getBytes());
-			byte[] dados = new byte[(int)saidaPadronizada.length()];
+			byte[] dados = new byte[(int) saidaPadronizada.length()];
 			response.setContentLengthLong(saidaPadronizada.length());
-	        out = response.getOutputStream();  
-	        i  = 0;  
-	        while ((i  = input.read(dados)) != -1) {  
-	            out.write(dados);
-	            out.flush();
-	            FacesContext.getCurrentInstance().getResponseComplete();
-	        }   
-	    } catch (IOException err) {  
-	        err.printStackTrace();  
-	    } finally {  
-	        try {  
-	            if (out != null) {  
-	                out.close();  
-	            }  
-	        } catch (IOException err) {  
-	            err.printStackTrace();  
-	        }  
-	    }  
+			out = response.getOutputStream();
+			i = 0;
+			while ((i = input.read(dados)) != -1) {
+				out.write(dados);
+				out.flush();
+				FacesContext.getCurrentInstance().getResponseComplete();
+			}
+		} catch (IOException err) {
+			err.printStackTrace();
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException err) {
+				err.printStackTrace();
+			}
+		}
 	}
 
 	public void visualizar(String nome) {
@@ -141,7 +154,7 @@ public class CompararArquivos implements Serializable {
 			for (String key : keys) {
 				buffer.append(Constantes.espaco + Constantes.espaco);
 				buffer.append(key.trim());
-				int tamanho = key.length();
+				int tamanho = key.trim().length();
 				while (tamanho < 16) {
 					buffer.append(Constantes.espaco);
 					tamanho++;
@@ -202,7 +215,7 @@ public class CompararArquivos implements Serializable {
 	public void comparar() {
 		List<Arquivo> bibs1 = arquivos.get(indices.get(0));
 		List<Arquivo> bibs2 = arquivos.get(indices.get(1));
-		Arquivo bibView1 = FileFactory.getInstance();
+		bibView1 = FileFactory.getInstance();
 		for (Arquivo bib1 : bibs1) {
 			Set<Entry<String, String>> keysBib1 = bib1.getAtributos().entrySet();
 			for (Arquivo bib2 : bibs2) {
@@ -210,6 +223,73 @@ public class CompararArquivos implements Serializable {
 					if (!bib2.getAtributos().containsKey(keyBib1.getKey().trim()))
 						bibView1.getAtributos().put(keyBib1.getKey(), bib1.getAtributos().get(keyBib1.getKey()));
 				}
+			}
+		}
+	}
+
+	public void concatenar() {
+		StringBuffer buffer = new StringBuffer();
+		StringBuffer nomeConcatenado = new StringBuffer();
+		for (int indice : indices) {
+			nomeConcatenado.append(nomes.get(indice));
+			List<Arquivo> bibTex = arquivos.get(indice);
+			for (Arquivo bib : bibTex) {
+				buffer.append("@");
+				buffer.append(bib.getTipo());
+				buffer.append("{");
+				buffer.append(bib.getReferencias());
+				buffer.append(",");
+				buffer.append("\n");
+				Set<String> keys = bib.getAtributos().keySet();
+				for (String key : keys) {
+					buffer.append("  ");
+					buffer.append(key.trim());
+					int tamanho = key.trim().length();
+					while (tamanho < 16) {
+						buffer.append(" ");
+						tamanho++;
+					}
+					buffer.append("=");
+					buffer.append(" ");
+					buffer.append("{");
+					buffer.append(bib.getAtributos().get(key));
+					buffer.append("},");
+					buffer.append("\n");
+				}
+				buffer.append("\n");
+			}
+			nomeConcatenado.append("+");
+		}
+		setSaidaPadronizada(buffer.toString());
+		nomeConcatenado.replace(nomeConcatenado.lastIndexOf("+"),nomeConcatenado.lastIndexOf("+")+1 ,"").append(".txt");
+
+		RequestContext context = RequestContext.getCurrentInstance();
+		context.release();
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+				.getResponse();
+		response.setHeader("Content-Disposition", "attachment;filename=" + nomeConcatenado);
+		response.setContentType("text/html; charset=UTF-8");
+		ServletOutputStream out = null;
+		try {
+			ByteArrayInputStream input = new ByteArrayInputStream(saidaPadronizada.getBytes());
+			byte[] dados = new byte[(int) saidaPadronizada.length()];
+			response.setContentLengthLong(saidaPadronizada.length());
+			out = response.getOutputStream();
+			i = 0;
+			while ((i = input.read(dados)) != -1) {
+				out.write(dados);
+				out.flush();
+				FacesContext.getCurrentInstance().getResponseComplete();
+			}
+		} catch (IOException err) {
+			err.printStackTrace();
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException err) {
+				err.printStackTrace();
 			}
 		}
 	}
@@ -276,5 +356,13 @@ public class CompararArquivos implements Serializable {
 
 	public void setSaidaPadronizada(String saidaPadronizada) {
 		this.saidaPadronizada = saidaPadronizada;
+	}
+
+	public Arquivo getBibView1() {
+		return bibView1;
+	}
+
+	public void setBibView1(Arquivo bibView1) {
+		this.bibView1 = bibView1;
 	}
 }
