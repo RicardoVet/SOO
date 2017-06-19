@@ -78,6 +78,8 @@ public class CompararArquivos implements Serializable {
 		int indice = nomes.indexOf(nome);
 		arquivos.remove(indice);
 		nomes.remove(indice);
+		if(indices!=null)
+			indices.remove(indice);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome+" Removido"));
 	}
 
