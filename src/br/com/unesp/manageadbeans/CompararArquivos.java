@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -33,6 +34,7 @@ public class CompararArquivos implements Serializable {
 	private Arquivo arquivo;
 	private List<List<Arquivo>> arquivos;
 	private List<Arquivo> bib;
+	private List<Arquivo> bibUpdate;
 	private List<String> filteredNomes;
 	private String conteudo;
 	int cont = 0;
@@ -67,12 +69,16 @@ public class CompararArquivos implements Serializable {
 		return Boolean.FALSE;
 	}
 
-	public void editar() {
-
+	public void editar(String nome) {
+		int indice = nomes.indexOf(nome);
+		bibUpdate = arquivos.get(indice);
 	}
 
-	public void apagar() {
-
+	public void apagar(String nome) {
+		int indice = nomes.indexOf(nome);
+		arquivos.remove(indice);
+		nomes.remove(indice);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome+" Removido"));
 	}
 
 	public void download(String nome) {
@@ -83,7 +89,7 @@ public class CompararArquivos implements Serializable {
 			buffer.append("@");
 			buffer.append(bib.getTipo());
 			buffer.append("{");
-			buffer.append(bib.getReferencias());
+			buffer.append(bib.getReferencias().toString().replace("[", "").replace("]", ""));
 			buffer.append(",");
 			buffer.append("\n");
 			Set<String> keys = bib.getAtributos().keySet();
@@ -140,7 +146,6 @@ public class CompararArquivos implements Serializable {
 
 	public void visualizar(String nome) {
 		int indice = nomes.indexOf(nome);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nomes.get(indice)));
 		StringBuffer buffer = new StringBuffer();
 		List<Arquivo> bibTex = arquivos.get(indice);
 		for (Arquivo bib : bibTex) {
@@ -204,6 +209,21 @@ public class CompararArquivos implements Serializable {
 				arquivos.add(bib);
 			}
 			bib = new ArrayList<>();
+		}
+	}
+	
+	public void gerarBibKey(){
+		for(List<Arquivo> bib:arquivos){
+			for(Arquivo bibTex:bib){
+				Set<Entry<String,String>> keysAndValuesBib = bibTex.getAtributos().entrySet();
+				for(Entry<String, String> keyAndValue:keysAndValuesBib){
+					if(keyAndValue.getKey().equalsIgnoreCase("author")){
+						System.out.println(keyAndValue.getValue());
+					}if(keyAndValue.getKey().equalsIgnoreCase("year")){
+						System.out.println(keyAndValue.getValue());
+					}
+				}
+			}
 		}
 	}
 
@@ -324,6 +344,14 @@ public class CompararArquivos implements Serializable {
 
 	public void setBib(List<Arquivo> bib) {
 		this.bib = bib;
+	}
+
+	public List<Arquivo> getBibUpdate() {
+		return bibUpdate;
+	}
+
+	public void setBibUpdate(List<Arquivo> bibUpdate) {
+		this.bibUpdate = bibUpdate;
 	}
 
 	public List<Integer> getIndices() {
