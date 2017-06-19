@@ -8,29 +8,19 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<style>
-.ui-datatable .ui-column-filter {
-	display: none;
-	width: 100px;
-	margin: auto;
-}
-</style>
 </h:head>
 <h:body>
 	<h:form prependId="false">
 		<f:metadata>
 			<f:viewAction action="#{compararArquivos.checkF5}" />
 		</f:metadata>
-		<p:growl id="msg" />
+		<p:growl id="msg"/>
 		<p:dataTable var="nome" value="#{compararArquivos.nomes}"
-			rowIndexVar="indice" rows="4" paginator="true"
-			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="1,2,3" widgetVar="Tabela" id="tabelaPrincipal"
-			filteredValue="#{compararArquivos.filteredNomes}">
+			rowIndexVar="indice" scrollable="true" scrollHeight="250"
+			widgetVar="Tabela" id="tabelaPrincipal">
 			<f:facet name="header">
 				<p:outputPanel>
-					<h:outputText value="Buscar:" />
-					<h:inputText id="globalFilter" onkeyup="PF('Tabela').filter()" />
+					<h:outputText value="Tabela" />
 				</p:outputPanel>
 			</f:facet>
 			<p:column headerText="Selecionar" width="90">
@@ -39,7 +29,7 @@
 						listener="#{compararArquivos.addIndice(nome)}" />
 				</p:selectBooleanCheckbox>
 			</p:column>
-			<p:column headerText="Nome" filterBy="#{nome}" id="nome">
+			<p:column headerText="Nome" id="nome">
 				<h:outputText value="#{nome}" />
 			</p:column>
 			<p:column headerText="Visualizar" width="90">
@@ -56,13 +46,14 @@
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Editar" width="90">
-				<p:commandLink action="#{compararArquivos.editar}" update="msg"
-					ajax="true" style="margin-left:20px;">
+				<p:commandLink actionListener="#{compararArquivos.editar(nome)}"
+					update="edicao" ajax="true" oncomplete="PF('edit').show();"
+					style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/editar.png" />
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Apagar" width="90">
-				<p:commandLink action="#{compararArquivos.apagar}" update="msg"
+				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="tabelaPrincipal msg"
 					ajax="true" style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/deletar.png" />
 				</p:commandLink>
@@ -72,10 +63,13 @@
 			actionListener="#{compararArquivos.comparar}" value="Comparar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}"
 			oncomplete="PF('dlg1').show();"
-			update="tabela3 tabela2 tabela1 tabela" />
+			update="tabela3 tabela2 tabela1  tabela" />
 		<p:commandButton id="concatenar" ajax="false"
 			actionListener="#{compararArquivos.concatenar}" value="Concatenar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
+		<p:commandButton id="BibKey" ajax="true"
+			actionListener="#{compararArquivos.gerarBibKey()}" value="BibKey"
+			disabled="#{(compararArquivos.indices.size() lt 0) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
 
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
@@ -141,6 +135,34 @@
 			<h:outputText
 				value="#{fn:replace(compararArquivos.saidaPadronizada,'\\n','&lt;br/&gt;')}"
 				escape="false" style="font-size:16px;" />
+		</p:dialog>
+		<p:dialog widgetVar="edit" id="edicao" height="200" width="600"
+			position="center" maximizable="true"
+			rendered="#{compararArquivos.bibUpdate.size() ge 1}">
+			<c:forEach var="indice" begin="0"
+				end="#{compararArquivos.bibUpdate.size()-1}">
+				<p:dataTable var="bib" editable="true" editMode="cell"
+					rowIndexVar="index"
+					value="#{compararArquivos.bibUpdate.get(indice).atributos.entrySet()}">
+					<p:column headerText="referencias">
+						<h:outputText value="#{bib.key}"
+							style="font-size:14px; font-family:arial,fantasy;" />
+					</p:column>
+					<p:column headerText="valores">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{bib.value}"
+									style="font-size:14px; font-family:arial,fantasy;" />
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText
+									value="#{compararArquivos.bibUpdate.get(indice).atributos[bib.key]}"
+									style="font-size:14px; font-family:arial,fantasy;" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+				</p:dataTable>
+			</c:forEach>
 		</p:dialog>
 	</h:form>
 	<p:dock>
