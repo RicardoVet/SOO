@@ -53,6 +53,21 @@ public class Scopus implements Parser {
 				while (token.hasMoreTokens())
 					arq.getAtributos().put(token.nextToken().trim(), token.nextToken().trim());
 			}
+			/*Set<Entry<String, String>> keysAndValuesBib = arq.getAtributos().entrySet();
+			StringBuffer autor = new StringBuffer();
+			StringBuffer ano = new StringBuffer();
+			for (Entry<String, String> keyAndValue : keysAndValuesBib) {
+				if (keyAndValue.getKey().equalsIgnoreCase("author")) {
+					String[] nome = keyAndValue.getValue().split("\\s+");
+					String sobreNome = nome[nome.length-1].trim();
+					autor.append(sobreNome.toLowerCase());
+				}
+				if (keyAndValue.getKey().equalsIgnoreCase("year")) {
+					ano.append(keyAndValue.getValue());
+				}
+			}
+			arq.getReferencias().clear();
+			arq.getReferencias().add(autor.toString() + ":" + ano.toString());*/
 		} else {
 			String str = conteudo;
 			if (str.contains("@")) {
