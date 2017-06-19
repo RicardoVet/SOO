@@ -10,7 +10,7 @@
 <h:head>
 </h:head>
 <h:body>
-	<h:form prependId="false">
+	<h:form prependId="false" id="formulario">
 		<f:metadata>
 			<f:viewAction action="#{compararArquivos.checkF5}" />
 		</f:metadata>
@@ -53,7 +53,7 @@
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Apagar" width="90">
-				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="tabelaPrincipal msg"
+				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="formulario tabelaPrincipal msg"
 					ajax="true" style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/deletar.png" />
 				</p:commandLink>
