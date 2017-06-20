@@ -86,6 +86,7 @@ public class CompararArquivos implements Serializable {
 	}
 
 	public void apagar(String nome) {
+<<<<<<< HEAD
 		int indice = nomes.indexOf(nome);
 		arquivos.remove(indice);
 		nomes.remove(indice);
@@ -102,6 +103,18 @@ public class CompararArquivos implements Serializable {
 		UIViewRoot root = handler.createView(context, viewId);
 		root.setViewId(viewId);
 		context.setViewRoot(root);
+=======
+		try {
+			int indice = nomes.indexOf(nome);
+			arquivos.remove(indice);
+			nomes.remove(indice);
+			if (indices != null)
+				indices.remove(indice);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome + " Removido"));
+		} catch (Exception e) {
+			mostrarErro(e.getMessage());
+		}
+>>>>>>> branch 'master' of https://github.com/RicardoVet/SOO.git
 	}
 
 	public void download(String nome) {
