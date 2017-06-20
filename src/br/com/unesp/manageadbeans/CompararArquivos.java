@@ -177,6 +177,39 @@ public class CompararArquivos implements Serializable {
 		}
 		setSaidaPadronizada(buffer.toString());
 	}
+	
+	public String visualizarPorIndice(String indice) {
+		StringBuffer buffer = new StringBuffer();
+		int index = indices.get(Integer.valueOf(indice));
+		List<Arquivo> bibTex = arquivos.get(index);
+		for (Arquivo bib : bibTex) {
+			buffer.append("@");
+			buffer.append(bib.getTipo());
+			buffer.append("{");
+			buffer.append(bib.getReferencias());
+			buffer.append(",");
+			buffer.append(Constantes.novaLinha);
+			Set<String> keys = bib.getAtributos().keySet();
+			for (String key : keys) {
+				buffer.append(Constantes.espaco + Constantes.espaco);
+				buffer.append(key.trim());
+				int tamanho = key.trim().length();
+				while (tamanho < 16) {
+					buffer.append(Constantes.espaco);
+					tamanho++;
+				}
+				buffer.append("=");
+				buffer.append(Constantes.espaco);
+				buffer.append("{");
+				buffer.append(bib.getAtributos().get(key));
+				buffer.append("},");
+				buffer.append(Constantes.novaLinha);
+			}
+			buffer.append(Constantes.novaLinha);
+		}
+		setSaidaPadronizada(buffer.toString());
+		return saidaPadronizada;
+	}
 
 	public void lerArquivo(byte[] dados, String opcao, String nome) throws IOException {
 		conteudo = "";
