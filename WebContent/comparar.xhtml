@@ -64,7 +64,7 @@
 			actionListener="#{compararArquivos.comparar}" value="Comparar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}"
 			oncomplete="PF('dlg1').show();"
-			update="tabela3 tabela2 tabela1  tabela" />
+			update="tabela3 tabela2 tabela" />
 		<p:commandButton id="concatenar" ajax="false"
 			actionListener="#{compararArquivos.concatenar}" value="Concatenar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
@@ -82,16 +82,7 @@
 				<p:layout style="min-width:300px;min-height:300px;" onResize="true">
 					<p:layoutUnit position="west" resizable="true" size="50%"
 						style="height:70px;">
-						<p:dataTable
-							value="#{compararArquivos.arquivos.get(compararArquivos.indices.get(0)).get(0).atributos.entrySet()}"
-							var="bib" id="tabela1">
-							<p:column headerText="labels">
-								<h:outputText value="#{bib.key}" style="font-size:12px;" />
-							</p:column>
-							<p:column headerText="valores">
-								<h:outputText value="#{bib.value}" style="font-size:12px;" />
-							</p:column>
-						</p:dataTable>
+								<h:outputText value="#{fn:replace(compararArquivos.visualizarPorIndice(0),'\\n','&lt;br/&gt;')}" escape="false" style="font-size:12px;" />
 					</p:layoutUnit>
 
 					<p:layoutUnit position="center" size="0" minSize="0" maxSize="0"
@@ -137,9 +128,10 @@
 				value="#{fn:replace(compararArquivos.saidaPadronizada,'\\n','&lt;br/&gt;')}"
 				escape="false" style="font-size:16px;" />
 		</p:dialog>
+		
 		<p:dialog widgetVar="edit" id="edicao" height="200" width="600"
-			position="center" maximizable="true"
-			rendered="#{compararArquivos.bibUpdate.size() ge 1}">
+			position="center" maximizable="true">
+			<c:if test="#{compararArquivos.bibUpdate.size() ge 1}">
 			<c:forEach var="indice" begin="0"
 				end="#{compararArquivos.bibUpdate.size()-1}">
 				<p:dataTable var="bib" editable="true" editMode="cell"
@@ -164,6 +156,7 @@
 					</p:column>
 				</p:dataTable>
 			</c:forEach>
+			</c:if>
 		</p:dialog>
 	</h:form>
 	<p:dock>
