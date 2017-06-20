@@ -86,35 +86,26 @@ public class CompararArquivos implements Serializable {
 	}
 
 	public void apagar(String nome) {
-<<<<<<< HEAD
-		int indice = nomes.indexOf(nome);
-		arquivos.remove(indice);
-		nomes.remove(indice);
-		if(indices!=null)
-			indices.remove(indice);
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		response.setHeader("Cache-Control", "no-cache");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", 0);
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome+" Removido"));
-		FacesContext context = FacesContext.getCurrentInstance();
-		String viewId = context.getViewRoot().getViewId();
-		ViewHandler handler = context.getApplication().getViewHandler();
-		UIViewRoot root = handler.createView(context, viewId);
-		root.setViewId(viewId);
-		context.setViewRoot(root);
-=======
 		try {
 			int indice = nomes.indexOf(nome);
 			arquivos.remove(indice);
 			nomes.remove(indice);
 			if (indices != null)
 				indices.remove(indice);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome + " Removido"));
+			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+			response.setHeader("Cache-Control", "no-cache");
+			response.setHeader("Pragma", "no-cache");
+			response.setDateHeader("Expires", 0);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome+" Removido"));
+			FacesContext context = FacesContext.getCurrentInstance();
+			String viewId = context.getViewRoot().getViewId();
+			ViewHandler handler = context.getApplication().getViewHandler();
+			UIViewRoot root = handler.createView(context, viewId);
+			root.setViewId(viewId);
+			context.setViewRoot(root);
 		} catch (Exception e) {
 			mostrarErro(e.getMessage());
 		}
->>>>>>> branch 'master' of https://github.com/RicardoVet/SOO.git
 	}
 
 	public void download(String nome) {
