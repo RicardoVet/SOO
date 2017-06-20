@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
@@ -20,7 +21,7 @@
 
 	<p:dialog header="Informações" widgetVar="dlg1" minHeight="40"
 		position="center">
-		<h:outputText value="conteúdo do arquivo deve ser mostrado" />
+		<h:outputText value="#{fn:replace(compararArquivos.saidaPadronizada,'\\n','&lt;br/&gt;')}" escape="false"/>
 	</p:dialog>
 
 	<script>
