@@ -54,7 +54,7 @@
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Apagar" width="90">
-				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="formulario tabelaPrincipal msg"
+				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="tabelaPrincipal comparar msg"
 					ajax="true" style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/deletar.png" />
 				</p:commandLink>
@@ -64,7 +64,7 @@
 			actionListener="#{compararArquivos.comparar}" value="Comparar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}"
 			oncomplete="PF('dlg1').show();"
-			update="tabela3 tabela2 tabela" />
+			update="tabela3 tabela" />
 		<p:commandButton id="concatenar" ajax="false"
 			actionListener="#{compararArquivos.concatenar}" value="Concatenar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
@@ -91,16 +91,7 @@
 
 					<p:layoutUnit position="east" resizable="true" size="50%"
 						style="height:70px;">
-						<p:dataTable
-							value="#{compararArquivos.arquivos.get(compararArquivos.indices.get(1)).get(0).atributos.entrySet()}"
-							var="bib" id="tabela2">
-							<p:column headerText="labels">
-								<h:outputText value="#{bib.key}" style="font-size:12px;" />
-							</p:column>
-							<p:column headerText="valores">
-								<h:outputText value="#{bib.value}" style="font-size:12px;" />
-							</p:column>
-						</p:dataTable>
+								<h:outputText value="#{fn:replace(compararArquivos.visualizarPorIndice(1),'\\n','&lt;br/&gt;')}" escape="false" style="font-size:12px;" />
 					</p:layoutUnit>
 				</p:layout>
 			</c:if>
