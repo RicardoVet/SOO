@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body onload="PF('info').show();"
+	style="background-image:url(resources/imagens/mesa/unesp.jpg);
+	 background-repeat: no-repeat;background-position: center;background-attachment: fixed;">
+	<p:growl showDetail="true" sticky="true" />
+
+
+
+	<p:dialog header="Sobre" draggable="true" widgetVar="info" showEffect="fade" hideEffect="fade" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/mesa/info.jpg" />
+				<h:outputText value="BibSys" style="font-size:16px" />
+				<h:outputText value="Versão Beta 1" />
+			
+				<h:outputText value="Como Funciona:" style="font-weight:bold;" />
+				<h:outputText value="O BibSys é um programa que tem por objetivo" />
+				<h:outputText value="realizar o gerenciamento de arquivos bibtex(.bib ). " />
+
+				<h:outputText value="Desenvolvedores:" style="font-weight:bold" />
+				<h:outputText value="Yuji Negoro " />
+				<h:outputText value="Ricardo Silva " />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+
+	<ui:include src="dock.xhtml"></ui:include>
+
+</h:body>
+</html>
