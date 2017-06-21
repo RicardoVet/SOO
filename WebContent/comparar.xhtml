@@ -70,7 +70,8 @@
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
 		<p:commandButton id="BibKey" ajax="true"
 			actionListener="#{compararArquivos.gerarBibKey()}" value="BibKey"
-			disabled="#{(compararArquivos.nomes.size() le 0)}" />
+			disabled="#{(compararArquivos.nomes.size() le 0)}" 
+			update = "msg"/>
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
 
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"

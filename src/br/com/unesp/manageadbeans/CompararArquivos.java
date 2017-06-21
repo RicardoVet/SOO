@@ -295,26 +295,26 @@ public class CompararArquivos implements Serializable {
 					Set<Entry<String, String>> keysAndValuesBib = bibTex.getAtributos().entrySet();
 					for (Entry<String, String> keyAndValue : keysAndValuesBib) {
 						if (keyAndValue.getKey().equalsIgnoreCase("author")) {
-							String[] nomes = keyAndValue.getValue().split(",|and|AND");
+							String[] nomes = keyAndValue.getValue().split("and|AND");
 							String sobreNome;
 							int cont = 0;
 							for (String nome : nomes) {
 								if (cont == 0) {
-									String[] temp = nome.split("\\s+");
-									sobreNome = temp[temp.length - 1].trim();
+									String[] temp = nome.trim().split("\\s+");
+									sobreNome = temp[0].trim();
 									autor.append(sobreNome.toLowerCase());
 								}
 								
 								if(cont==1){
-									String[] temp = nome.split("\\s+");
-									sobreNome = temp[temp.length - 1].trim();
+									String[] temp = nome.trim().split("\\s+");
+									sobreNome = temp[0].trim();
 									autor.append(".");
 									autor.append(sobreNome.toLowerCase());
 								}
 								
 								if(cont ==2){
 									String[] temp = nome.split("\\s+");
-									sobreNome = temp[temp.length - 1].trim();
+									sobreNome = temp[0].trim();
 									autor.replace(autor.indexOf(".")+1, autor.length(), "");
 									autor.append("etal");
 								}
@@ -326,11 +326,12 @@ public class CompararArquivos implements Serializable {
 						}
 					}
 					bibTexTemp.getReferencias().clear();
-					bibTexTemp.getReferencias().add(autor.toString() + ":" + ano.toString());
+					bibTexTemp.getReferencias().add(autor.toString().replace(",", "") + ":" + ano.toString());
 					autor = new StringBuffer();
 					ano = new StringBuffer();
 				}
 			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("BibKey gerada com sucesso"));
 		} catch (Exception e) {
 			mostrarErro(e.getMessage());
 		}
