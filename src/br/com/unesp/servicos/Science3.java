@@ -31,7 +31,7 @@ public class Science3 implements Parser {
 				arq.getAtributos().put(chave, valor);
 			} else {
 				chave = tokens.nextToken();
-				chave = chave.replace(",", "").replace("=", "");
+				chave = chave.replace(",", "").replace("=", "").trim();
 			}
 		}
 		return null;

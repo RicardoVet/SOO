@@ -20,6 +20,7 @@ public class Explore implements Parser{
 		ref.add(key);
 		arq.setReferencias(ref);
 
+		result2[1] = result2[1].replace("{}", "{ }");
 		StringBuilder builder = new StringBuilder(result2[1]);
 		builder.replace(result2[1].lastIndexOf("}"), result2[1].lastIndexOf("}")+1, "");
 		StringTokenizer tokens = new StringTokenizer(builder.toString(), "{|}");
@@ -32,7 +33,7 @@ public class Explore implements Parser{
 			}
 			else{
 				chave = tokens.nextToken();
-				chave = chave.replace(",", "").replace("=", "");
+				chave = chave.replace(",", "").replace("=", "").trim();
 			}
 		}
 		return null;

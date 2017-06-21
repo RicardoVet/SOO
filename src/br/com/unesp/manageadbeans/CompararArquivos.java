@@ -207,7 +207,7 @@ public class CompararArquivos implements Serializable {
 			}
 			setSaidaPadronizada(buffer.toString());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			mostrarErro(e.getMessage());
 		}
 	}
@@ -287,16 +287,48 @@ public class CompararArquivos implements Serializable {
 	public void gerarBibKey() {
 		try {
 			for (List<Arquivo> bib : arquivos) {
+				StringBuffer autor = new StringBuffer();
+				StringBuffer ano = new StringBuffer();
+				Arquivo bibTexTemp;
 				for (Arquivo bibTex : bib) {
+					bibTexTemp = bibTex;
 					Set<Entry<String, String>> keysAndValuesBib = bibTex.getAtributos().entrySet();
 					for (Entry<String, String> keyAndValue : keysAndValuesBib) {
 						if (keyAndValue.getKey().equalsIgnoreCase("author")) {
-							System.out.println(keyAndValue.getValue());
+							String[] nomes = keyAndValue.getValue().split(",|and|AND");
+							String sobreNome;
+							int cont = 0;
+							for (String nome : nomes) {
+								if (cont == 0) {
+									String[] temp = nome.split("\\s+");
+									sobreNome = temp[temp.length - 1].trim();
+									autor.append(sobreNome.toLowerCase());
+								}
+								
+								if(cont==1){
+									String[] temp = nome.split("\\s+");
+									sobreNome = temp[temp.length - 1].trim();
+									autor.append(".");
+									autor.append(sobreNome.toLowerCase());
+								}
+								
+								if(cont ==2){
+									String[] temp = nome.split("\\s+");
+									sobreNome = temp[temp.length - 1].trim();
+									autor.replace(autor.indexOf(".")+1, autor.length(), "");
+									autor.append("etal");
+								}
+								cont++;
+							}
 						}
 						if (keyAndValue.getKey().equalsIgnoreCase("year")) {
-							System.out.println(keyAndValue.getValue());
+							ano.append(keyAndValue.getValue());
 						}
 					}
+					bibTexTemp.getReferencias().clear();
+					bibTexTemp.getReferencias().add(autor.toString() + ":" + ano.toString());
+					autor = new StringBuffer();
+					ano = new StringBuffer();
 				}
 			}
 		} catch (Exception e) {

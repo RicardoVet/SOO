@@ -54,7 +54,7 @@
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Apagar" width="90">
-				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="tabelaPrincipal comparar msg"
+				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="tabelaPrincipal comparar BibKey concatenar msg"
 					ajax="true" style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/deletar.png" />
 				</p:commandLink>
@@ -70,7 +70,7 @@
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
 		<p:commandButton id="BibKey" ajax="true"
 			actionListener="#{compararArquivos.gerarBibKey()}" value="BibKey"
-			disabled="#{(compararArquivos.indices.size() lt 0) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
+			disabled="#{(compararArquivos.nomes.size() le 0)}" />
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
 
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
@@ -141,7 +141,7 @@
 							<f:facet name="input">
 								<h:inputText
 									value="#{compararArquivos.bibUpdate.get(indice).atributos[bib.key]}"
-									style="font-size:14px; font-family:arial,fantasy;" />
+									style="font-size:14px; font-family:arial,fantasy; width:80%;" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>

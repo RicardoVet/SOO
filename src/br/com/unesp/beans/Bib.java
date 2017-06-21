@@ -3,15 +3,11 @@ package br.com.unesp.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import br.com.unesp.servicos.Explore;
-import br.com.unesp.servicos.Springer;
-import br.com.unesp.servicos.Science;
 import br.com.unesp.servicos.Science2;
 import br.com.unesp.servicos.Science3;
-import br.com.unesp.servicos.Scopus;
+import br.com.unesp.servicos.Springer;
 
 public class Bib extends Arquivo implements Serializable {
 
@@ -36,13 +32,22 @@ public class Bib extends Arquivo implements Serializable {
 		Pattern pattern3 = Pattern.compile("(\\w|\\W)*(\"\\s*})");
 		Pattern pattern4 = Pattern.compile("(\\w|\\W)*(\"\\s*,*\\s*})");
 		if (pattern.matcher(conteudo).find()) {
+			int posicao = conteudo.lastIndexOf("}");
+			StringBuffer temp  = new StringBuffer(conteudo);
+			temp.replace(posicao, posicao+1, ",}");
+			conteudo = "";
+			conteudo = temp.toString();
 			parser = new Springer();
 			parser.getParser(conteudo, this);
 		} else if (pattern2.matcher(conteudo).find()) {
 			parser = new Explore();
 			parser.getParser(conteudo, this);
 		} else if (pattern3.matcher(conteudo).find()) {
-			Matcher m = pattern.matcher(conteudo);
+			int posicao = conteudo.lastIndexOf("\"");
+			StringBuffer temp  = new StringBuffer(conteudo);
+			temp.replace(posicao+1, posicao+2, ",}");
+			conteudo="";
+			conteudo = temp.toString();
 			parser = new Science2();
 			parser.getParser(conteudo, this);
 		} else if (pattern4.matcher(conteudo).find()) {

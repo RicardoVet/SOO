@@ -20,9 +20,8 @@ public class Science2 implements Parser{
 		ref.add(key);
 		arq.setReferencias(ref);
 
-		StringBuilder builder = new StringBuilder(result2[1]);
-		builder.replace(result2[1].lastIndexOf("}"), result2[1].lastIndexOf("}")+1, "");
-		StringTokenizer tokens = new StringTokenizer(builder.toString(), "\"");
+		result2[1] = result2[1].replace("\"\"", "\" \"");
+		StringTokenizer tokens = new StringTokenizer(result2[1], "\"");
 		String chave = null;
 		String valor = null;
 		while(tokens.hasMoreTokens()){
@@ -32,7 +31,7 @@ public class Science2 implements Parser{
 			}
 			else{
 				chave = tokens.nextToken();
-				chave = chave.replace(",", "").replace("=", "");
+				chave = chave.replace(",", "").replace("=", "").trim();
 			}
 		}
 		return null;
