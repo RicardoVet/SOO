@@ -40,7 +40,6 @@ public class CompararArquivos implements Serializable {
 	private List<String> filteredNomes;
 	private String conteudo;
 	int cont = 0;
-	private String opcao;
 	private String nome;
 	private String saidaPadronizada;
 	private Arquivo bibView1;
@@ -90,19 +89,19 @@ public class CompararArquivos implements Serializable {
 			int indice = nomes.indexOf(nome);
 			arquivos.remove(indice);
 			nomes.remove(indice);
-			if (indices != null)
-				indices.remove(indice);
-			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+					.getResponse();
 			response.setHeader("Cache-Control", "no-cache");
 			response.setHeader("Pragma", "no-cache");
 			response.setDateHeader("Expires", 0);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome+" Removido"));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(nome + " Removido"));
 			FacesContext context = FacesContext.getCurrentInstance();
 			String viewId = context.getViewRoot().getViewId();
 			ViewHandler handler = context.getApplication().getViewHandler();
 			UIViewRoot root = handler.createView(context, viewId);
 			root.setViewId(viewId);
 			context.setViewRoot(root);
+			this.checkF5();
 		} catch (Exception e) {
 			mostrarErro(e.getMessage());
 		}
@@ -208,6 +207,7 @@ public class CompararArquivos implements Serializable {
 			}
 			setSaidaPadronizada(buffer.toString());
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			mostrarErro(e.getMessage());
 		}
 	}
@@ -250,10 +250,9 @@ public class CompararArquivos implements Serializable {
 
 	}
 
-	public void lerArquivo(byte[] dados, String opcao, String nome) throws IOException {
+	public void lerArquivo(byte[] dados, String nome) throws IOException {
 		try {
 			conteudo = "";
-			this.opcao = opcao;
 			this.nome = nome;
 			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(dados)));
 			while (buffer.ready())
@@ -261,37 +260,28 @@ public class CompararArquivos implements Serializable {
 			buffer.close();
 			this.criarBib();
 		} catch (Exception e) {
+			e.printStackTrace();
 			mostrarErro(e.getMessage());
 		}
 	}
 
 	public void criarBib() {
-		try {
-			String temp = "";
+		String result[] = conteudo.split("@");
+		for (int i = 1; i < result.length; i++) {
 			setArquivo(FileFactory.getInstance());
-			temp = arquivo.parser(conteudo, opcao);
+			arquivo.parser(result[i]);
 			bib.add(arquivo);
-			if (!temp.equals("")) {
-				cont++;
-				conteudo = "";
-				conteudo = temp;
-				criarBib();
-				cont--;
-			}
-			if (cont == 0) {
-				if (nomes.contains(nome)) {
-					int posicao = nomes.indexOf(nome);
-					arquivos.remove(posicao);
-					arquivos.add(posicao, bib);
-				} else {
-					nomes.add(nome);
-					arquivos.add(bib);
-				}
-				bib = new ArrayList<>();
-			}
-		} catch (Exception e) {
-			mostrarErro(e.getMessage());
 		}
+
+		if (nomes.contains(nome)) {
+			int posicao = nomes.indexOf(nome);
+			arquivos.remove(posicao);
+			arquivos.add(posicao, bib);
+		} else {
+			nomes.add(nome);
+			arquivos.add(bib);
+		}
+		bib = new ArrayList<>();
 	}
 
 	public void gerarBibKey() {

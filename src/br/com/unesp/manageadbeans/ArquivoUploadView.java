@@ -12,16 +12,6 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 public class ArquivoUploadView {
 	
-	private String opcao;
-	
-	public String getOpcao() {
-		return opcao;
-	}
-
-	public void setOpcao(String opcao) {
-		this.opcao = opcao;
-	}
-
 	@ManagedProperty(value = "#{compararArquivos}")
 	CompararArquivos compararArquivos;
 
@@ -33,7 +23,7 @@ public class ArquivoUploadView {
 		String nome = event.getFile().getFileName();
 		byte[] dados = event.getFile().getContents();
 		try {
-			compararArquivos.lerArquivo(dados, opcao, nome);
+			compararArquivos.lerArquivo(dados, nome);
 		} catch (IOException e) {
 			FacesMessage message = new FacesMessage("Erro", nome + " não foi enviado.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
