@@ -1,7 +1,5 @@
 package br.com.unesp.servicos;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import br.com.unesp.beans.Arquivo;

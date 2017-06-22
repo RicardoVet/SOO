@@ -83,14 +83,13 @@ public class CompararArquivos implements Serializable {
 			mostrarErro(e.getMessage());
 		}
 	}
-	
-	
-	public void ordenar(String nome){
+
+	public void ordenar(String nome) {
 		int indice = nomes.indexOf(nome);
 		bibUpdate = arquivos.get(indice);
-		for(int i= 0 ; i<bibUpdate.size(); i++){
-			for(int j = i+1; j<bibUpdate.size(); j++){
-				if(bibUpdate.get(i).getReferencias().compareToIgnoreCase(bibUpdate.get(j).getReferencias())>0){
+		for (int i = 0; i < bibUpdate.size(); i++) {
+			for (int j = i + 1; j < bibUpdate.size(); j++) {
+				if (bibUpdate.get(i).getReferencias().compareToIgnoreCase(bibUpdate.get(j).getReferencias()) > 0) {
 					Arquivo bibTempI = bibUpdate.get(i);
 					Arquivo bibTempJ = bibUpdate.get(j);
 					bibUpdate.remove(i);
@@ -284,7 +283,7 @@ public class CompararArquivos implements Serializable {
 		}
 	}
 
-	public void criarBib() {
+	private void criarBib() {
 		String result[] = conteudo.split("@");
 		for (int i = 1; i < result.length; i++) {
 			setArquivo(FileFactory.getInstance());
@@ -301,6 +300,21 @@ public class CompararArquivos implements Serializable {
 			arquivos.add(bib);
 		}
 		bib = new ArrayList<>();
+	}
+
+	private void verificarDuplicidade() {
+		for (int indice = 0; indice < arquivos.size(); indice++) {
+			bibUpdate = arquivos.get(indice);
+			for (int i = 0; i < bibUpdate.size(); i++) {
+				char letra= 'a';
+				for (int j = i + 1; j < bibUpdate.size(); j++) {
+					if (bibUpdate.get(i).getReferencias().equals(bibUpdate.get(j).getReferencias())) {
+						bibUpdate.get(j).setReferencias(bibUpdate.get(j).getReferencias()+letra);
+						letra++;
+					}
+				}
+			}
+		}
 	}
 
 	public void gerarBibKey() {
@@ -323,18 +337,18 @@ public class CompararArquivos implements Serializable {
 									sobreNome = temp[0].trim();
 									autor.append(sobreNome.toLowerCase());
 								}
-								
-								if(cont==1){
+
+								if (cont == 1) {
 									String[] temp = nome.trim().split("\\s+");
 									sobreNome = temp[0].trim();
 									autor.append(".");
 									autor.append(sobreNome.toLowerCase());
 								}
-								
-								if(cont ==2){
+
+								if (cont == 2) {
 									String[] temp = nome.split("\\s+");
 									sobreNome = temp[0].trim();
-									autor.replace(autor.indexOf(".")+1, autor.length(), "");
+									autor.replace(autor.indexOf(".") + 1, autor.length(), "");
 									autor.append("etal");
 								}
 								cont++;
@@ -349,6 +363,7 @@ public class CompararArquivos implements Serializable {
 					ano = new StringBuffer();
 				}
 			}
+			this.verificarDuplicidade();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("BibKey gerada com sucesso"));
 		} catch (Exception e) {
 			mostrarErro(e.getMessage());

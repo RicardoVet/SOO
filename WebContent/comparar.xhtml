@@ -10,15 +10,264 @@
 <h:head>
 </h:head>
 <h:body>
+	<p:menubar toggleEvent="click">
+		<p:submenu icon="ui-icon-home">
+			<p:menuitem value="Sobre o Sistema" url="#"
+				onclick="PF('info').show();" icon="ui-icon ui-icon-info">
+			</p:menuitem>
+		</p:submenu>
+
+		<p:submenu label="Ajuda">
+			<p:menuitem value="Documento" url="#" onclick="PF('pdf').show();"
+				styleClass="open" icon="ui-icon ui-icon-document">
+			</p:menuitem>
+			<p:menuitem value="Visualizar" url="#"
+				onclick="PF('visualizar').show();" styleClass="open"
+				icon="ui-icon ui-icon-help">
+			</p:menuitem>
+			<p:menuitem value="Download" url="#" onclick="PF('download').show();"
+				styleClass="open" icon="ui-icon ui-icon-help">
+			</p:menuitem>
+			<p:menuitem value="Editar" url="#" onclick="PF('editar').show();"
+				styleClass="open" icon="ui-icon ui-icon-help">
+			</p:menuitem>
+			<p:menuitem value="Ordenar" url="#" onclick="PF('ordenar').show();"
+				styleClass="open" icon="ui-icon ui-icon-help">
+			</p:menuitem>
+			<p:menuitem value="Apagar" url="#" onclick="PF('apagar').show();"
+				styleClass="open" icon="ui-icon ui-icon-help">
+			</p:menuitem>
+		</p:submenu>
+
+		<p:submenu label="Ações">
+			<p:menuitem value="Comparar" url="#" onclick="PF('comparar').show();"
+				styleClass="open" icon="ui-icon ui-icon-help">
+			</p:menuitem>
+			<p:menuitem value="Concatenar" url="#"
+				onclick="PF('concatenar').show();" styleClass="open"
+				icon="ui-icon ui-icon-help">
+			</p:menuitem>
+			<p:menuitem value="BibKey" url="#" onclick="PF('bibkey').show();"
+				styleClass="open" icon="ui-icon ui-icon-help">
+			</p:menuitem>
+		</p:submenu>
+
+		<p:submenu label="Sobre Nós">
+			<p:menuitem value="Desenvolvedores" url="#"
+				onclick="PF('ajuda').show();" styleClass="open"
+				icon="ui-icon ui-icon-info">
+			</p:menuitem>
+		</p:submenu>
+
+	</p:menubar>
+
+	<p:dialog header="PDF" widgetVar="pdf" resizable="false"
+		maximizable="true" minimizable="true" width="70%" height="400">
+		<object type="application/pdf"
+			data="/BIB/resources/documento/Projeto-BibSys.pdf?pfdrid_c=true"
+			width="100%" height="100%" />
+	</p:dialog>
+
+	<p:dialog header="Sobre" draggable="true" widgetVar="info"
+		showEffect="fade" hideEffect="fade" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/mesa/info.jpg" />
+				<h:outputText value="Leitor de Arquivos" style="font-size:16px" />
+				<h:outputText value="Versão Beta 1" />
+				<p:commandButton value="Doar" async="true" onclick="return false;" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" style="text-align:center;">
+				<h:outputText value="Ao Contribuir:" style="font-weight:bold" />
+				<h:outputText value="Você estará ajudando o nosso trabalho " />
+				<h:outputText value="" style="font-weight:bold" />
+				<h:outputText value="a melhorar cada vez mais" />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Ajuda" draggable="true" widgetVar="ajuda"
+		showEffect="slice" hideEffect="slice">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/mesa/Help.png" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<h:outputText value="Como Funciona:" style="font-weight:bold;" />
+				<h:outputText value="O BibSys é um programa que tem por objetivo" />
+				<h:outputText
+					value="realizar o gerenciamento de arquivos bibtex(.bib ). " />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Visualizar" draggable="true" widgetVar="visualizar"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/visualizar.png" />
+				<h:outputText value="Ao clicar no ícone visualizar" />
+				<h:outputText
+					value="você poderá ver o conteúdo do seu arquivo no modo texto" />
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Download" draggable="true" widgetVar="download"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/Download.png" />
+				<h:outputText value="Ao clicar no ícone download" />
+				<h:outputText
+					value="será iniciado o download do arquivo para o seu computador" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Editar" draggable="true" widgetVar="editar"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/editar.png" />
+				<h:outputText value="Ao clicar no ícone editar" />
+				<h:outputText
+					value="uma janela será aberta com uma tabela contendo o seu arquivo" />
+				<h:outputText
+					value="para realizar uma alteração basta clicar sobre o item que deseja alterar" />
+				<h:outputText value="e após a alteração clicar em enter" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Ordenar" draggable="true" widgetVar="ordenar"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/ordenar.png" />
+				<h:outputText value="Ao clicar no ícone ordenar" />
+				<h:outputText escape="false"
+					value="uma ordenação em ordem crescente será realizada utilizando como parametro" />
+				<h:outputText
+					value="a chave bibkey a ordenação ser´realizada diretamente no seu arquivo" />
+				<h:outputText
+					value="com alterações permanentes certifique-se antes de confirmar esta ação" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Apagar" draggable="true" widgetVar="apagar"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/deletar.png" />
+				<h:outputText value="Ao clicar no ícone apagar" />
+				<h:outputText escape="false"
+					value="uma ordenação será realizada utilizando como parametro a chave bibkey" />
+				<h:outputText
+					value="a ordenação ser´realizada diretamente no seu arquivo com alterações" />
+				<h:outputText
+					value="permanentes certifique-se antes de confirmar esta ação" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Comparar" draggable="true" widgetVar="comparar"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/botao.png" />
+				<h:outputText
+					value="Para utilizar o botão comparar é preciso selecionar 2 arquivos" />
+				<h:outputText
+					value="marcando-os através da coluna Selecionar somente os arquivos marcados" />
+				<h:outputText
+					value="serão comparados a ordem de comparação é definida através da ordem de seleção" />
+				<h:outputText
+					value="a comparação verifica quais referencias estão no primeiro arquivo da esquerda" />
+				<h:outputText
+					value="com as referencias do arquivo da direita caso não exista a referencia ela será" />
+				<h:outputText
+					value="inserida em um terceiro arquivo (tabela) abaixo com a coloração vermelha " />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Concatenar" draggable="true" widgetVar="concatenar"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/botao.png" />
+				<h:outputText
+					value="Para utilizar o botão concatenar é preciso selecionar 2 arquivos" />
+				<h:outputText
+					value="marcando-os através da coluna Selecionar somente os arquivos marcados" />
+				<h:outputText
+					value="serão concatenados a ordem de concatenação é definida através da ordem de seleção" />
+				<h:outputText
+					value="a concatenação ira gerar um unico arquivo que será transferido para o computador" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="BibKey" draggable="true" widgetVar="bibkey"
+		showEffect="explode" hideEffect="explode" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/comparar/botao.png" />
+				<h:outputText
+					value="Para utilizar o botão BibKey é preciso que exista pelo menos 1 arquivo na tabela" />
+				<h:outputText
+					value="todos os arquivos presentes na tabela terão suas bibkeys geradas seguindo o critério" />
+				<h:outputText value="de nome:ano" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<p:contextMenu for="formulario">
+		<p:menuitem value="Documento" url="#" onclick="PF('pdf').show();"
+			styleClass="open" icon="ui-icon ui-icon-document">
+		</p:menuitem>
+		<p:menuitem value="Visualizar" url="#"
+			onclick="PF('visualizar').show();" styleClass="open"
+			icon="ui-icon ui-icon-help">
+		</p:menuitem>
+		<p:menuitem value="Download" url="#" onclick="PF('download').show();"
+			styleClass="open" icon="ui-icon ui-icon-help">
+		</p:menuitem>
+		<p:menuitem value="Editar" url="#" onclick="PF('editar').show();"
+			styleClass="open" icon="ui-icon ui-icon-help">
+		</p:menuitem>
+		<p:menuitem value="Ordenar" url="#" onclick="PF('ordenar').show();"
+			styleClass="open" icon="ui-icon ui-icon-help">
+		</p:menuitem>
+		<p:menuitem value="Apagar" url="#" onclick="PF('apagar').show();"
+			styleClass="open" icon="ui-icon ui-icon-help">
+		</p:menuitem>
+	</p:contextMenu>
+
 	<h:form prependId="false" id="formulario">
 		<f:metadata>
 			<f:viewAction action="#{compararArquivos.checkF5}" />
 		</f:metadata>
-		<p:growl id="msg"/>
+		<p:growl id="msg" />
+		<p:ajaxStatus onstart="PF('aguarde').show()"
+						onsuccess="PF('aguarde').hide()" />
+		<p:confirmDialog widgetVar="confirm" global="false" showEffect="fade"
+			hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
 		<p:dataTable var="nome" value="#{compararArquivos.nomes}"
-		emptyMessage="Nenhum Arquivo"
-			rowIndexVar="indice" scrollable="true" scrollHeight="250"
-			widgetVar="Tabela" id="tabelaPrincipal">
+			emptyMessage="Nenhum Arquivo" rowIndexVar="indice" scrollable="true"
+			scrollHeight="320" widgetVar="Tabela" id="tabelaPrincipal">
 			<f:facet name="header">
 				<p:outputPanel>
 					<h:outputText value="Tabela" />
@@ -37,7 +286,8 @@
 				<p:commandLink action="#{compararArquivos.visualizar(nome)}"
 					update="msg :formatado" ajax="true" oncomplete="PF('bib').show();"
 					style="margin-left:20px;">
-					<p:graphicImage url="/resources/imagens/comparar/visualizar.png" />
+					<p:graphicImage id="visualiz"
+						url="/resources/imagens/comparar/visualizar.png" />
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Download" width="90">
@@ -55,14 +305,19 @@
 			</p:column>
 			<p:column headerText="Ordenar" width="90">
 				<p:commandLink actionListener="#{compararArquivos.ordenar(nome)}"
-					update="msg" ajax="true"
+					update="msg view formatado" ajax="true"
+					onstart="PF('confirm').show();" oncomplete="PF('bib').show();"
 					style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/ordenar.png" />
+					<p:confirm header="Aviso"
+						message="Esta ação ira ordenar o seu arquivo diretamente tem certeza que deseja continuar esta ação não podera ser desfeita"
+						icon="ui-icon-alert" />
 				</p:commandLink>
 			</p:column>
 			<p:column headerText="Apagar" width="90">
-				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="tabelaPrincipal comparar BibKey concatenar msg"
-					ajax="true" style="margin-left:20px;">
+				<p:commandLink action="#{compararArquivos.apagar(nome)}"
+					update="tabelaPrincipal comparar BibKey concatenar msg" ajax="true"
+					style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/deletar.png" />
 				</p:commandLink>
 			</p:column>
@@ -70,15 +325,13 @@
 		<p:commandButton id="comparar"
 			actionListener="#{compararArquivos.comparar}" value="Comparar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}"
-			oncomplete="PF('dlg1').show();"
-			update="tabela3 tabela" />
+			oncomplete="PF('dlg1').show();" update="tabela3 tabela" />
 		<p:commandButton id="concatenar" ajax="false"
 			actionListener="#{compararArquivos.concatenar}" value="Concatenar"
 			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
 		<p:commandButton id="BibKey" ajax="true"
 			actionListener="#{compararArquivos.gerarBibKey()}" value="BibKey"
-			disabled="#{(compararArquivos.nomes.size() le 0)}" 
-			update = "msg"/>
+			disabled="#{(compararArquivos.nomes.size() le 0)}" update="msg" />
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
 
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
@@ -90,7 +343,9 @@
 				<p:layout style="min-width:300px;min-height:300px;" onResize="true">
 					<p:layoutUnit position="west" resizable="true" size="50%"
 						style="height:70px;">
-								<h:outputText value="#{fn:replace(compararArquivos.visualizarPorIndice(0),'\\n','&lt;br/&gt;')}" escape="false" style="font-size:12px;" />
+						<h:outputText
+							value="#{fn:replace(compararArquivos.visualizarPorIndice(0),'\\n','&lt;br/&gt;')}"
+							escape="false" style="font-size:12px;" />
 					</p:layoutUnit>
 
 					<p:layoutUnit position="center" size="0" minSize="0" maxSize="0"
@@ -99,7 +354,9 @@
 
 					<p:layoutUnit position="east" resizable="true" size="50%"
 						style="height:70px;">
-								<h:outputText value="#{fn:replace(compararArquivos.visualizarPorIndice(1),'\\n','&lt;br/&gt;')}" escape="false" style="font-size:12px;" />
+						<h:outputText
+							value="#{fn:replace(compararArquivos.visualizarPorIndice(1),'\\n','&lt;br/&gt;')}"
+							escape="false" style="font-size:12px;" />
 					</p:layoutUnit>
 				</p:layout>
 			</c:if>
@@ -125,37 +382,41 @@
 			position="center" maximizable="true" minimizable="true">
 			<h:outputText
 				value="#{fn:replace(compararArquivos.saidaPadronizada,'\\n','&lt;br/&gt;')}"
-				escape="false" style="font-size:16px;" />
+				escape="false" style="font-size:16px;" id="view" />
 		</p:dialog>
-		
+
 		<p:dialog widgetVar="edit" id="edicao" height="200" width="600"
 			position="center" maximizable="true">
 			<c:if test="#{compararArquivos.bibUpdate.size() ge 1}">
-			<c:forEach var="indice" begin="0"
-				end="#{compararArquivos.bibUpdate.size()-1}">
-				<p:dataTable var="bib" editable="true" editMode="cell"
-					rowIndexVar="index"
-					value="#{compararArquivos.bibUpdate.get(indice).atributos.entrySet()}">
-					<p:column headerText="referencias">
-						<h:outputText value="#{bib.key}"
-							style="font-size:14px; font-family:arial,fantasy;" />
-					</p:column>
-					<p:column headerText="valores">
-						<p:cellEditor>
-							<f:facet name="output">
-								<h:outputText value="#{bib.value}"
-									style="font-size:14px; font-family:arial,fantasy;" />
-							</f:facet>
-							<f:facet name="input">
-								<h:inputText
-									value="#{compararArquivos.bibUpdate.get(indice).atributos[bib.key]}"
-									style="font-size:14px; font-family:arial,fantasy; width:80%;" />
-							</f:facet>
-						</p:cellEditor>
-					</p:column>
-				</p:dataTable>
-			</c:forEach>
+				<c:forEach var="indice" begin="0"
+					end="#{compararArquivos.bibUpdate.size()-1}">
+					<p:dataTable var="bib" editable="true" editMode="cell"
+						rowIndexVar="index"
+						value="#{compararArquivos.bibUpdate.get(indice).atributos.entrySet()}">
+						<p:column headerText="referencias">
+							<h:outputText value="#{bib.key}"
+								style="font-size:14px; font-family:arial,fantasy;" />
+						</p:column>
+						<p:column headerText="valores">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{bib.value}"
+										style="font-size:14px; font-family:arial,fantasy;" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText
+										value="#{compararArquivos.bibUpdate.get(indice).atributos[bib.key]}"
+										style="font-size:14px; font-family:arial,fantasy; width:80%;" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+					</p:dataTable>
+				</c:forEach>
 			</c:if>
+		</p:dialog>
+		<p:dialog widgetVar="aguarde" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false" showEffect="fade">
+			<p:graphicImage name="/imagens/comparar/aguarde2.gif" />
 		</p:dialog>
 	</h:form>
 	<ui:include src="dock.xhtml"></ui:include>

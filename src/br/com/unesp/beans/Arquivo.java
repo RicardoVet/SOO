@@ -1,6 +1,5 @@
 package br.com.unesp.beans;
 
-import java.util.List;
 import java.util.Map;
 
 import br.com.unesp.servicos.Parser;

@@ -1,7 +1,6 @@
 package br.com.unesp.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 import br.com.unesp.servicos.Explore;
