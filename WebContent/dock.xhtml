@@ -4,16 +4,37 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+	<p:dialog header="Sobre" draggable="true" widgetVar="sobre"
+		showEffect="fade" hideEffect="fade" resizable="false">
+		<h:form>
+			<h:panelGrid columns="1" style="width:100%;text-align:center;">
+				<p:graphicImage value="/resources/imagens/mesa/info.jpg" />
+				<h:outputText value="BibSys" style="font-size:16px" />
+				<h:outputText value="Versão Beta 1" />
+
+				<h:outputText value="Como Funciona:" style="font-weight:bold;" />
+				<h:outputText value="O BibSys é um programa que tem por objetivo" />
+				<h:outputText
+					value="realizar o gerenciamento de arquivos bibtex(.bib ). " />
+
+				<h:outputText value="Desenvolvedores:" style="font-weight:bold" />
+				<h:outputText value="Flavio Tanaka " />
+				<h:outputText value="Ricardo Silva " />
+				<h:outputText value="Yuji Negoro " />
+
+			</h:panelGrid>
+
+		</h:form>
+	</p:dialog>
+
 <p:dock>
 
 	<p:menuitem value="Upload" icon="/resources/imagens/mesa/upload.png"
 		url="index.jsf" ajax="false" />
-	<p:menuitem value="Cover Flow"
-		icon="/resources/imagens/mesa/cover-flow.png" url="contentFlow.jsf" />
 	<p:menuitem value="Comparar"
 		icon="/resources/imagens/mesa/comparar.png" url="comparar.jsf" />
-	<p:menuitem value="Sobre nós"
-		icon="/resources/imagens/mesa/sobre-nos.png" url="sobrenos.jsf" />
+	<p:menuitem value="Sobre nós" url="#"
+		icon="/resources/imagens/mesa/sobre-nos.png" onclick="PF('sobre').show();" />
 
 </p:dock>
 

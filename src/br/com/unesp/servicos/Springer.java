@@ -8,7 +8,11 @@ public class Springer implements Parser {
 
 	@Override
 	public String getParser(String conteudo, Arquivo arq) {
-		System.out.println("sem virgula e com chaves");
+		int posicao = conteudo.lastIndexOf("}");
+		StringBuffer temp  = new StringBuffer(conteudo);
+		temp.replace(posicao, posicao+1, ",}");
+		conteudo = "";
+		conteudo = temp.toString();
 		String[] result = conteudo.split("\\{", 2);
 		arq.setTipo(result[0]);
 		String[] result2 = result[1].split(",", 2);

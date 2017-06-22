@@ -8,7 +8,11 @@ public class Science2 implements Parser{
 
 	@Override
 	public String getParser(String conteudo, Arquivo arq) {
-		System.out.println("com aspas e sem virgula");
+		int posicao = conteudo.lastIndexOf("\"");
+		StringBuffer temp  = new StringBuffer(conteudo);
+		temp.replace(posicao+1, posicao+2, ",}");
+		conteudo="";
+		conteudo = temp.toString();
 		String[] result = conteudo.split("\\{", 2);
 		arq.setTipo(result[0]);
 		String[] result2 = result[1].split(",", 2);

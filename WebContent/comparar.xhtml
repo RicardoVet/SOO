@@ -265,7 +265,7 @@
 			<p:commandButton value="Não" type="button"
 				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 		</p:confirmDialog>
-		<p:dataTable var="nome" value="#{compararArquivos.nomes}"
+		<p:dataTable var="nome" value="#{compararArquivos.comparador.nomes}"
 			emptyMessage="Nenhum Arquivo" rowIndexVar="indice" scrollable="true"
 			scrollHeight="320" widgetVar="Tabela" id="tabelaPrincipal">
 			<f:facet name="header">
@@ -305,8 +305,8 @@
 			</p:column>
 			<p:column headerText="Ordenar" width="90">
 				<p:commandLink actionListener="#{compararArquivos.ordenar(nome)}"
-					update="msg" ajax="true"
-					onstart="PF('confirm').show();" oncomplete="PF('bib').show();"
+					update="formatado msg" ajax="true"
+					onstart="PF('confirm').show();"
 					style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/ordenar.png" />
 					<p:confirm header="Aviso"
@@ -324,14 +324,14 @@
 		</p:dataTable>
 		<p:commandButton id="comparar"
 			actionListener="#{compararArquivos.comparar}" value="Comparar"
-			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}"
+			disabled="#{(compararArquivos.comparador.indices.size() lt 2) or (compararArquivos.comparador.indices eq null) or(compararArquivos.comparador.indices.size() ge 3)}"
 			oncomplete="PF('dlg1').show();" update="tabela3 tabela" />
 		<p:commandButton id="concatenar" ajax="false"
 			actionListener="#{compararArquivos.concatenar}" value="Concatenar"
-			disabled="#{(compararArquivos.indices.size() lt 2) or (compararArquivos.indices eq null) or(compararArquivos.indices.size() ge 3)}" />
+			disabled="#{(compararArquivos.comparador.indices.size() lt 2) or (compararArquivos.comparador.indices eq null) or(compararArquivos.comparador.indices.size() ge 3)}" />
 		<p:commandButton id="BibKey" ajax="true"
 			actionListener="#{compararArquivos.gerarBibKey()}" value="BibKey"
-			disabled="#{(compararArquivos.nomes.size() le 0)}" update="msg" />
+			disabled="#{(compararArquivos.comparador.nomes.size() le 0)}" update="msg" />
 		<!-- <p:button value="Voltar" href="inicio.jsf"/>-->
 
 		<p:dialog header="Comparação dos Arquivos" widgetVar="dlg1"
@@ -339,7 +339,7 @@
 			minimizable="true" hideEffect="explode" showEffect="slide"
 			minWidth="800" minHeight="800" width="70%" height="450"
 			resizable="false" id="tabela">
-			<c:if test="#{compararArquivos.indices.size() ge 2}">
+			<c:if test="#{compararArquivos.comparador.indices.size() ge 2}">
 				<p:layout style="min-width:300px;min-height:300px;" onResize="true">
 					<p:layoutUnit position="west" resizable="true" size="50%"
 						style="height:70px;">
@@ -364,7 +364,7 @@
 				<p:layoutUnit position="top"></p:layoutUnit>
 				<p:layoutUnit position="center">
 					<p:dataTable var="bib"
-						value="#{compararArquivos.bibView1.atributos.entrySet()}"
+						value="#{compararArquivos.comparador.bibView1.atributos.entrySet()}"
 						id="tabela3">
 						<p:column headerText="referencias">
 							<h:outputText value="#{bib.key}"
@@ -381,18 +381,18 @@
 		<p:dialog widgetVar="bib" id="formatado" height="200" width="600"
 			position="center" maximizable="true" minimizable="true">
 			<h:outputText
-				value="#{fn:replace(compararArquivos.saidaPadronizada,'\\n','&lt;br/&gt;')}"
+				value="#{fn:replace(compararArquivos.comparador.saidaPadronizada,'\\n','&lt;br/&gt;')}"
 				escape="false" style="font-size:16px;" id="view" />
 		</p:dialog>
 
 		<p:dialog widgetVar="edit" id="edicao" height="200" width="600"
 			position="center" maximizable="true">
-			<c:if test="#{compararArquivos.bibUpdate.size() ge 1}">
+			<c:if test="#{compararArquivos.comparador.bibUpdate.size() ge 1}">
 				<c:forEach var="indice" begin="0"
-					end="#{compararArquivos.bibUpdate.size()-1}">
+					end="#{compararArquivos.comparador.bibUpdate.size()-1}">
 					<p:dataTable var="bib" editable="true" editMode="cell"
 						rowIndexVar="index"
-						value="#{compararArquivos.bibUpdate.get(indice).atributos.entrySet()}">
+						value="#{compararArquivos.comparador.bibUpdate.get(indice).atributos.entrySet()}">
 						<p:column headerText="referencias">
 							<h:outputText value="#{bib.key}"
 								style="font-size:14px; font-family:arial,fantasy;" />
@@ -405,7 +405,7 @@
 								</f:facet>
 								<f:facet name="input">
 									<h:inputText
-										value="#{compararArquivos.bibUpdate.get(indice).atributos[bib.key]}"
+										value="#{compararArquivos.comparador.bibUpdate.get(indice).atributos[bib.key]}"
 										style="font-size:14px; font-family:arial,fantasy; width:80%;" />
 								</f:facet>
 							</p:cellEditor>

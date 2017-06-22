@@ -30,22 +30,12 @@ public class Bib extends Arquivo implements Serializable {
 		Pattern pattern3 = Pattern.compile("(\\w|\\W)*(\"\\s*})");
 		Pattern pattern4 = Pattern.compile("(\\w|\\W)*(\"\\s*,*\\s*})");
 		if (pattern.matcher(conteudo).find()) {
-			int posicao = conteudo.lastIndexOf("}");
-			StringBuffer temp  = new StringBuffer(conteudo);
-			temp.replace(posicao, posicao+1, ",}");
-			conteudo = "";
-			conteudo = temp.toString();
 			parser = new Springer();
 			parser.getParser(conteudo, this);
 		} else if (pattern2.matcher(conteudo).find()) {
 			parser = new Explore();
 			parser.getParser(conteudo, this);
 		} else if (pattern3.matcher(conteudo).find()) {
-			int posicao = conteudo.lastIndexOf("\"");
-			StringBuffer temp  = new StringBuffer(conteudo);
-			temp.replace(posicao+1, posicao+2, ",}");
-			conteudo="";
-			conteudo = temp.toString();
 			parser = new Science2();
 			parser.getParser(conteudo, this);
 		} else if (pattern4.matcher(conteudo).find()) {
