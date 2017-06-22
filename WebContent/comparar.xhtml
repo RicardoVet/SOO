@@ -258,7 +258,7 @@
 		<p:growl id="msg" />
 		<p:ajaxStatus onstart="PF('aguarde').show()"
 						onsuccess="PF('aguarde').hide()" />
-		<p:confirmDialog widgetVar="confirm" global="false" showEffect="fade"
+		<p:confirmDialog widgetVar="confirm" global="true" showEffect="fade"
 			hideEffect="fade">
 			<p:commandButton value="Sim" type="button"
 				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -305,7 +305,7 @@
 			</p:column>
 			<p:column headerText="Ordenar" width="90">
 				<p:commandLink actionListener="#{compararArquivos.ordenar(nome)}"
-					update="msg view formatado" ajax="true"
+					update="msg" ajax="true"
 					onstart="PF('confirm').show();" oncomplete="PF('bib').show();"
 					style="margin-left:20px;">
 					<p:graphicImage url="/resources/imagens/comparar/ordenar.png" />
