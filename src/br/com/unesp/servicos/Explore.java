@@ -15,10 +15,7 @@ public class Explore implements Parser{
 		arq.setTipo(result[0]);
 		String[] result2 = result[1].split(",", 2);
 
-		String key = result2[0];
-		List<String> ref = new ArrayList<>();
-		ref.add(key);
-		arq.setReferencias(ref);
+		arq.setReferencias(result2[0]);
 
 		result2[1] = result2[1].replace("{}", "{ }");
 		StringBuilder builder = new StringBuilder(result2[1]);

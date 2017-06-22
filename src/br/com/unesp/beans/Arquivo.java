@@ -7,7 +7,7 @@ import br.com.unesp.servicos.Parser;
 
 public abstract class Arquivo {
 
-	private List<String> referencias;
+	private String referencias;
 	private Map<String, String>atributos;
 	private String tipo;
 	protected Parser parser;
@@ -23,17 +23,19 @@ public abstract class Arquivo {
 		this.atributos = atributos;
 	}
 
-	public void setReferencias(List<String> referencias) {
-		this.referencias = referencias;
-	}
-	
-	public List<String> getReferencias() {
-		return referencias;
-	}
-
 	public String getTipo() {
 		return tipo;
 	}
+
+	public String getReferencias() {
+		return referencias;
+	}
+
+
+	public void setReferencias(String referencias) {
+		this.referencias = referencias;
+	}
+
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;

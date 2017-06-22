@@ -26,7 +26,7 @@ public class CadastrarMB {
 	}
 	
 	public String cadastrar(){
-		FacesMessage message = new FacesMessage("Sucesso", arquivo.getReferencias().get(0) + " cadastrado ");
+		FacesMessage message = new FacesMessage("Sucesso", arquivo.getReferencias() + " cadastrado ");
         FacesContext.getCurrentInstance().addMessage(null, message);
         return null;
 	}

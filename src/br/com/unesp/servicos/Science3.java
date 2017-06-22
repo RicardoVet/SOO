@@ -15,10 +15,7 @@ public class Science3 implements Parser {
 		arq.setTipo(result[0]);
 		String[] result2 = result[1].split(",", 2);
 
-		String key = result2[0];
-		List<String> ref = new ArrayList<>();
-		ref.add(key);
-		arq.setReferencias(ref);
+		arq.setReferencias(result2[0]);
 
 		StringBuilder builder = new StringBuilder(result2[1]);
 		builder.replace(result2[1].lastIndexOf("}"), result2[1].lastIndexOf("}") + 1, "");

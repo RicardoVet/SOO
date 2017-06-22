@@ -83,6 +83,25 @@ public class CompararArquivos implements Serializable {
 			mostrarErro(e.getMessage());
 		}
 	}
+	
+	
+	public void ordenar(String nome){
+		int indice = nomes.indexOf(nome);
+		bibUpdate = arquivos.get(indice);
+		for(int i= 0 ; i<bibUpdate.size(); i++){
+			for(int j = i+1; j<bibUpdate.size(); j++){
+				if(bibUpdate.get(i).getReferencias().compareToIgnoreCase(bibUpdate.get(j).getReferencias())>0){
+					Arquivo bibTempI = bibUpdate.get(i);
+					Arquivo bibTempJ = bibUpdate.get(j);
+					bibUpdate.remove(i);
+					bibUpdate.add(i, bibTempJ);
+					bibUpdate.remove(j);
+					bibUpdate.add(j, bibTempI);
+				}
+			}
+		}
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Arquivo Ordenado"));
+	}
 
 	public void apagar(String nome) {
 		try {
@@ -325,8 +344,7 @@ public class CompararArquivos implements Serializable {
 							ano.append(keyAndValue.getValue());
 						}
 					}
-					bibTexTemp.getReferencias().clear();
-					bibTexTemp.getReferencias().add(autor.toString().replace(",", "") + ":" + ano.toString());
+					bibTexTemp.setReferencias(autor.toString().replace(",", "") + ":" + ano.toString());
 					autor = new StringBuffer();
 					ano = new StringBuffer();
 				}

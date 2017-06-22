@@ -17,7 +17,6 @@ public class Bib extends Arquivo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Bib() {
-		setReferencias(new ArrayList<>());
 		setAtributos(new HashMap<String, String>());
 	}
 

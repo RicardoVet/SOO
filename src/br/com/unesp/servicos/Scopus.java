@@ -27,7 +27,7 @@ public class Scopus implements Parser {
 
 			ref = new StringTokenizer(str2, ",");
 			while (ref.hasMoreElements())
-				arq.getReferencias().add(ref.nextToken().replace("@" + arq.getTipo(), "").replace("{", ""));
+				arq.setReferencias(ref.nextToken().replace("@" + arq.getTipo(), "").replace("{", ""));
 
 			while (token.hasMoreTokens())
 				str += token.nextToken();
@@ -96,7 +96,7 @@ public class Scopus implements Parser {
 
 			ref = new StringTokenizer(str2, ",");
 			while (ref.hasMoreElements())
-				arq.getReferencias().add(ref.nextToken().replace("@" + arq.getTipo(), "").replace("{", ""));
+				arq.setReferencias(ref.nextToken().replace("@" + arq.getTipo(), "").replace("{", ""));
 
 			StringTokenizer token = new StringTokenizer(str, ",");
 			str = "";

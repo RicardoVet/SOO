@@ -53,6 +53,13 @@
 					<p:graphicImage url="/resources/imagens/comparar/editar.png" />
 				</p:commandLink>
 			</p:column>
+			<p:column headerText="Ordenar" width="90">
+				<p:commandLink actionListener="#{compararArquivos.ordenar(nome)}"
+					update="msg" ajax="true"
+					style="margin-left:20px;">
+					<p:graphicImage url="/resources/imagens/comparar/ordenar.png" />
+				</p:commandLink>
+			</p:column>
 			<p:column headerText="Apagar" width="90">
 				<p:commandLink action="#{compararArquivos.apagar(nome)}" update="tabelaPrincipal comparar BibKey concatenar msg"
 					ajax="true" style="margin-left:20px;">
