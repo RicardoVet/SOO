@@ -4,14 +4,19 @@ import java.util.StringTokenizer;
 
 import br.com.unesp.beans.Arquivo;
 
-public class Science2 implements Parser{
+/**
+ * 
+ * Implementação do Parser para Science
+ * 
+ */
+public class Science2 implements Parser {
 
 	@Override
 	public String getParser(String conteudo, Arquivo arq) {
 		int posicao = conteudo.lastIndexOf("\"");
-		StringBuffer temp  = new StringBuffer(conteudo);
-		temp.replace(posicao+1, posicao+2, ",}");
-		conteudo="";
+		StringBuffer temp = new StringBuffer(conteudo);
+		temp.replace(posicao + 1, posicao + 2, ",}");
+		conteudo = "";
 		conteudo = temp.toString();
 		String[] result = conteudo.split("\\{", 2);
 		arq.setTipo(result[0]);
@@ -23,12 +28,11 @@ public class Science2 implements Parser{
 		StringTokenizer tokens = new StringTokenizer(result2[1], "\"");
 		String chave = null;
 		String valor = null;
-		while(tokens.hasMoreTokens()){
-			if (tokens.countTokens() % 2 == 0){
+		while (tokens.hasMoreTokens()) {
+			if (tokens.countTokens() % 2 == 0) {
 				valor = tokens.nextToken();
 				arq.getAtributos().put(chave, valor);
-			}
-			else{
+			} else {
 				chave = tokens.nextToken();
 				chave = chave.replace(",", "").replace("=", "").trim();
 			}

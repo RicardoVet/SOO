@@ -4,7 +4,12 @@ import java.util.StringTokenizer;
 
 import br.com.unesp.beans.Arquivo;
 
-public class Science implements Parser{
+/**
+ * 
+ * Implementação do Parser para Science
+ * 
+ */
+public class Science implements Parser {
 
 	@Override
 	public String getParser(String conteudo, Arquivo arq) {

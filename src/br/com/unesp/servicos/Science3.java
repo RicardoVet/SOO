@@ -4,11 +4,15 @@ import java.util.StringTokenizer;
 
 import br.com.unesp.beans.Arquivo;
 
+/**
+ * 
+ * Implementação do Parser para Science
+ * 
+ */
 public class Science3 implements Parser {
 
 	@Override
 	public String getParser(String conteudo, Arquivo arq) {
-		System.out.println("com aspas e com virgula");
 		String[] result = conteudo.split("\\{", 2);
 		arq.setTipo(result[0]);
 		String[] result2 = result[1].split(",", 2);

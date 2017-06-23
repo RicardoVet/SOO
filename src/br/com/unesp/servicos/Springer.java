@@ -4,13 +4,18 @@ import java.util.StringTokenizer;
 
 import br.com.unesp.beans.Arquivo;
 
+/**
+ * 
+ * Implementação do Parser para Springer
+ * 
+ */
 public class Springer implements Parser {
 
 	@Override
 	public String getParser(String conteudo, Arquivo arq) {
 		int posicao = conteudo.lastIndexOf("}");
-		StringBuffer temp  = new StringBuffer(conteudo);
-		temp.replace(posicao, posicao+1, ",}");
+		StringBuffer temp = new StringBuffer(conteudo);
+		temp.replace(posicao, posicao + 1, ",}");
 		conteudo = "";
 		conteudo = temp.toString();
 		String[] result = conteudo.split("\\{", 2);
