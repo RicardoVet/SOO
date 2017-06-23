@@ -11,11 +11,8 @@
 </h:head>
 <h:body>
 	<p:menubar toggleEvent="click">
-		<p:submenu icon="ui-icon-home">
-			<p:menuitem value="Sobre o Sistema" url="#"
-				onclick="PF('info').show();" icon="ui-icon ui-icon-info">
-			</p:menuitem>
-		</p:submenu>
+			<p:menuitem icon="ui-icon-home" url="/">
+		</p:menuitem>
 
 		<p:submenu label="Ajuda">
 			<p:menuitem value="Documento" url="#" onclick="PF('pdf').show();"
@@ -49,13 +46,6 @@
 			</p:menuitem>
 			<p:menuitem value="BibKey" url="#" onclick="PF('bibkey').show();"
 				styleClass="open" icon="ui-icon ui-icon-help">
-			</p:menuitem>
-		</p:submenu>
-
-		<p:submenu label="Sobre Nós">
-			<p:menuitem value="Desenvolvedores" url="#"
-				onclick="PF('ajuda').show();" styleClass="open"
-				icon="ui-icon ui-icon-info">
 			</p:menuitem>
 		</p:submenu>
 

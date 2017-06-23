@@ -7,6 +7,13 @@
 
 <h:head></h:head>
 <h:body>
+
+<p:menubar toggleEvent="click">
+		<p:menuitem icon="ui-icon-home" url="/">
+		</p:menuitem>
+
+	</p:menubar>
+
 	<h:form prependId="false">
 		<p:fileUpload label="Selecionar" invalidFileMessage="arquivo inválido"
 			fileUploadListener="#{arquivoUploadView.upload}" mode="advanced"
