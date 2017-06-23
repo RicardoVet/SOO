@@ -8,6 +8,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 
+
+/**
+ * 
+ * Gerencia os dados do arquivo em um array de bites
+ * 
+ *
+ */
 @ManagedBean
 @ViewScoped
 public class ArquivoUploadView {
@@ -19,6 +26,14 @@ public class ArquivoUploadView {
 		this.compararArquivos = compararArquivos;
 	}
 	
+	
+	/**
+	 * 
+	 * Realiza o upload o arquivo, passando as informações para um array de bites.
+	 * Logo em seguida, realiza injeção de dependencia no CompararArquivos
+	 * 
+	 * @param event
+	 */
 	public void upload(FileUploadEvent event){
 		String nome = event.getFile().getFileName();
 		byte[] dados = event.getFile().getContents();
