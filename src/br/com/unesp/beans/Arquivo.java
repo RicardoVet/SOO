@@ -4,6 +4,13 @@ import java.util.Map;
 
 import br.com.unesp.servicos.Parser;
 
+/**
+ * 
+ * Classe Arquivo
+ * 
+ * Classe abstrata para o arquivo .bib
+ *
+ */
 public abstract class Arquivo {
 
 	private String referencias;

@@ -8,11 +8,15 @@ import br.com.unesp.servicos.Science2;
 import br.com.unesp.servicos.Science3;
 import br.com.unesp.servicos.Springer;
 
+
+/**
+ * 
+ * Classe Bib
+ * 
+ * Classe que será cada bibtex dentro do arquivo
+ */
 public class Bib extends Arquivo implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public Bib() {
@@ -20,7 +24,7 @@ public class Bib extends Arquivo implements Serializable {
 	}
 
 	/**
-	 * criar logica de decisão para definir parser concreto
+	 * Define qual base será utilizada para realizar a transformação do arquivo inicial para o arquivo final
 	 * 
 	 **/
 	@Override
