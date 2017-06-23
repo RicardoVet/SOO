@@ -22,6 +22,13 @@ import br.com.unesp.beans.Arquivo;
 import br.com.unesp.constatntes.Constantes;
 import br.com.unesp.factory.FileFactory;
 
+/**
+ * 
+ * Classe com a logica para realizar a comparação entre os arquivos e as bibTex
+ * 
+ * 
+ *
+ */
 public class Comparar {
 
 	private List<String> nomes;
@@ -44,6 +51,13 @@ public class Comparar {
 		bib = new ArrayList<>();
 	}
 
+	/**
+	 * 
+	 * Adiciona o arquivo selecionado em uma lista de indice
+	 * 
+	 * @param nome
+	 * @return
+	 */
 	public String addIndice(String nome) {
 		if (indices == null)
 			indices = new ArrayList<>();
@@ -52,15 +66,12 @@ public class Comparar {
 		return (ret == Boolean.TRUE) ? " Adicionado" : " Removido";
 	}
 
-	public Boolean valueCheck(String nome) {
-		if (indices != null) {
-			int indice = nomes.indexOf(nome);
-			if (indices.contains(indice))
-				return Boolean.TRUE;
-		}
-		return Boolean.FALSE;
-	}
-
+	/**
+	 * 
+	 * Abre a janela de edição do arquivo
+	 * 
+	 * @param nome
+	 */
 	public void editar(String nome) {
 		try {
 			int indice = nomes.indexOf(nome);
@@ -70,6 +81,12 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Ordena as bibTexs dentro do arquivo selecionado, pela bibKey
+	 * 
+	 * @param nome
+	 */
 	public void ordenar(String nome) {
 		int indice = nomes.indexOf(nome);
 		bibUpdate = arquivos.get(indice);
@@ -87,6 +104,12 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Apaga o arquivo selecionado do indice e do programa
+	 * 
+	 * @param nome
+	 */
 	public void apagar(String nome) {
 		try {
 			int indice = nomes.indexOf(nome);
@@ -110,6 +133,12 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Realiza o download do arquivo para o usuario
+	 * 
+	 * @param nome
+	 */
 	public void download(String nome) {
 		try {
 			int indice = nomes.indexOf(nome);
@@ -177,6 +206,12 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Abre a janela de visualização do arquivo selecionado
+	 * 
+	 * @param nome
+	 */
 	public void visualizar(String nome) {
 
 		try {
@@ -215,6 +250,13 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Devolve os arquivos conforme o indice no formato de html para exibição
+	 * 
+	 * @param indice
+	 * @return
+	 */
 	public String visualizarPorIndice(String indice) {
 		StringBuffer buffer = new StringBuffer();
 		int index = indices.get(Integer.valueOf(indice));
@@ -249,6 +291,15 @@ public class Comparar {
 
 	}
 
+	/**
+	 * 
+	 * Converte o array de bytes com as informações do arquivo para uma String
+	 * em java.
+	 * 
+	 * @param dados
+	 * @param nome
+	 * @throws IOException
+	 */
 	public void lerArquivo(byte[] dados, String nome) throws IOException {
 		try {
 			conteudo = "";
@@ -264,6 +315,11 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Gera o objeto Bib, utilizando a fabrica
+	 * 
+	 */
 	private void criarBib() {
 		String result[] = conteudo.split("@");
 		for (int i = 1; i < result.length; i++) {
@@ -283,6 +339,12 @@ public class Comparar {
 		bib = new ArrayList<>();
 	}
 
+	/**
+	 * 
+	 * Apos ordenação, verifica bibKey iguais, e caso tenha igual, concatena a
+	 * letra
+	 * 
+	 */
 	private void verificarDuplicidade() {
 		for (int indice = 0; indice < arquivos.size(); indice++) {
 			bibUpdate = arquivos.get(indice);
@@ -298,6 +360,12 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Gera bibKey de todos os arquivos de acordo com as regras passadas pelo
+	 * professor
+	 * 
+	 */
 	public void gerarBibKey() {
 		try {
 			for (List<Arquivo> bib : arquivos) {
@@ -351,11 +419,12 @@ public class Comparar {
 		}
 	}
 
-	public void checkF5() {
-		if (indices != null)
-			indices.clear();
-	}
-
+	/**
+	 * 
+	 * Abre a janela de comparação, pega os arquivos selecionados, e devolve as
+	 * diferenças
+	 * 
+	 */
 	public void comparar() {
 		try {
 			List<Arquivo> bibs1 = arquivos.get(indices.get(0));
@@ -375,6 +444,12 @@ public class Comparar {
 		}
 	}
 
+	/**
+	 * 
+	 * Concatena os arquivos selecionados em um terceiro arquivo que será
+	 * enviado para download
+	 * 
+	 */
 	public void concatenar() {
 		try {
 			StringBuffer buffer = new StringBuffer();
@@ -446,7 +521,23 @@ public class Comparar {
 			mostrarErro(e.getMessage());
 		}
 	}
+	
+	/**
+	 * 
+	 * Limpa os indices ao atualizar a pagina
+	 * 
+	 */
+	public void checkF5() {
+		if (indices != null)
+			indices.clear();
+	}
 
+	/**
+	 * 
+	 * Controle de erros
+	 * 
+	 * @param erro
+	 */
 	public void mostrarErro(String erro) {
 
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO:" + erro, erro);
